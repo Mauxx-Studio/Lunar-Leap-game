@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b37uhsj1lihwy"
-path.s3tc="res://.godot/imported/8k_earth_nightmap.jpg-cdebb1a90368091d9f71085bbe09bc9e.s3tc.ctex"
+uid="uid://c277cifrb61np"
+path.bptc="res://.godot/imported/NightSkyHDRI002_4K-HDR.exr-975343a619bdd02537ff395ee8b667cd.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/8k_earth_nightmap.jpg"
-dest_files=["res://.godot/imported/8k_earth_nightmap.jpg-cdebb1a90368091d9f71085bbe09bc9e.s3tc.ctex"]
+source_file="res://scenes/env_and_camera/NightSkyHDRI002_4K-HDR.exr"
+dest_files=["res://.godot/imported/NightSkyHDRI002_4K-HDR.exr-975343a619bdd02537ff395ee8b667cd.bptc.ctex"]
 
 [params]
 

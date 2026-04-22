@@ -1,0 +1,9 @@
+Earth;
+	mass = 5.9722e24 kg
+	radio = 6371000 m
+
+Moon
+	mass = 7.349e22 kg
+	radio = 1737400 m
+	periapsis = 358500000.0 m
+	vel_periapsis = 1083 m/s

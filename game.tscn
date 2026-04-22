@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://btmqxgw80lq1f"]
+
+[ext_resource type="Script" uid="uid://dwldmldpnga2m" path="res://addons/orbital_tools/orbital_object_3d.gd" id="1_ryrav"]
+[ext_resource type="Script" uid="uid://cfwxhm2xnfh4v" path="res://visible_world.gd" id="2_eow3j"]
+[ext_resource type="PackedScene" uid="uid://cp7pih1ent0io" path="res://env_and_camera/spatial_env.tscn" id="3_j5wjh"]
+[ext_resource type="Script" uid="uid://dyh4tqcwedext" path="res://earth_v.gd" id="4_eow3j"]
+[ext_resource type="Script" uid="uid://b7mpqaj87yomo" path="res://directional_light_3d.gd" id="4_hve3p"]
+[ext_resource type="Texture2D" uid="uid://bt0of0kymelnn" path="res://textures/8k_earth_daymap.jpg" id="4_vef74"]
+[ext_resource type="Texture2D" uid="uid://b37uhsj1lihwy" path="res://textures/8k_earth_nightmap.jpg" id="5_hve3p"]
+[ext_resource type="Texture2D" uid="uid://b3j3t0pfv1xwr" path="res://textures/8k_moon.jpg" id="6_mfdv2"]
+[ext_resource type="Script" uid="uid://d18mnv8qcbk7w" path="res://moon_v.gd" id="7_j5wjh"]
+[ext_resource type="Script" uid="uid://dkvatgi40k83x" path="res://addons/orbital_tools/orbit_render_3d.gd" id="9_vef74"]
+[ext_resource type="Script" uid="uid://c66cf4i1sgrdc" path="res://ship_v.gd" id="10_mfdv2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
+albedo_texture = ExtResource("4_vef74")
+emission_enabled = true
+emission_energy_multiplier = 0.4
+emission_texture = ExtResource("5_hve3p")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mfdv2"]
+radius = 6.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lc2xo"]
+albedo_texture = ExtResource("6_mfdv2")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iotsf"]
+radius = 1.7
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lc2xo"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_vef74"]
+
+[node name="Game" type="Node" unique_id=535765069]
+
+[node name="EarthSystem" type="Node3D" parent="." unique_id=955197966]
+
+[node name="Earth" type="Node3D" parent="EarthSystem" unique_id=368103243 node_paths=PackedStringArray("related_to")]
+script = ExtResource("1_ryrav")
+mass = 5.9722e+24
+radius = 6371000.0
+related_to = NodePath("../../VisibleWorld/EarthV")
+metadata/_custom_type_script = "uid://dwldmldpnga2m"
+
+[node name="Moon" type="Node3D" parent="EarthSystem/Earth" unique_id=221041121 node_paths=PackedStringArray("related_to")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179250000, 0, 310470100)
+script = ExtResource("1_ryrav")
+mass = 7.349e+22
+radius = 1737400.0
+pos_radius = 358500000.0
+pos_theta = 60.0
+vel_speed = 1083.0
+_initial_position = Vector3(179250000, 0, 310470100)
+_initial_velocity = Vector3(937.906, 0, -541.5)
+related_to = NodePath("../../../VisibleWorld/EarthV/MoonV")
+metadata/_custom_type_script = "uid://dwldmldpnga2m"
+
+[node name="Ship" type="Node3D" parent="EarthSystem/Earth" unique_id=2080854534 node_paths=PackedStringArray("related_to")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6800000, 0, 0)
+script = ExtResource("1_ryrav")
+_initial_position = Vector3(6800000, 0, 0)
+_initial_velocity = Vector3(0, 0, 7656.3)
+related_to = NodePath("../../../VisibleWorld/EarthV/ShipV")
+metadata/_custom_type_script = "uid://dwldmldpnga2m"
+
+[node name="VisibleWorld" type="Node3D" parent="." unique_id=769440149]
+script = ExtResource("2_eow3j")
+
+[node name="SpatialEnv" parent="VisibleWorld" unique_id=1501752903 instance=ExtResource("3_j5wjh")]
+
+[node name="Node3D" type="Node3D" parent="VisibleWorld" unique_id=1029800242]
+transform = Transform3D(1, 0, 0, 0, 0.9170601, -0.39874908, 0, 0.39874908, 0.9170601, 0, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Node3D" unique_id=2099046766]
+script = ExtResource("4_hve3p")
+
+[node name="EarthV" type="Area3D" parent="VisibleWorld" unique_id=1059918498]
+script = ExtResource("4_eow3j")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/EarthV" unique_id=725007646]
+radial_segments = 36
+rings = 18
+material = SubResource("StandardMaterial3D_iotsf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV" unique_id=905865603]
+shape = SubResource("SphereShape3D_mfdv2")
+
+[node name="MoonV" type="Area3D" parent="VisibleWorld/EarthV" unique_id=1577467366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
+script = ExtResource("7_j5wjh")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/EarthV/MoonV" unique_id=1093889782]
+radial_segments = 36
+rings = 18
+material = SubResource("StandardMaterial3D_lc2xo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV/MoonV" unique_id=857969080]
+shape = SubResource("SphereShape3D_iotsf")
+
+[node name="ShipV" type="Area3D" parent="VisibleWorld/EarthV" unique_id=217427543]
+script = ExtResource("10_mfdv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV/ShipV" unique_id=1810949507]
+shape = SubResource("SphereShape3D_lc2xo")
+
+[node name="MoonVOrbit" type="MeshInstance3D" parent="VisibleWorld/EarthV" unique_id=1796362207 node_paths=PackedStringArray("orbiter")]
+extra_cull_margin = 100.0
+mesh = SubResource("ImmediateMesh_vef74")
+script = ExtResource("9_vef74")
+orbiter = NodePath("../MoonV")
+metadata/_custom_type_script = "uid://dkvatgi40k83x"
+
+[node name="OrbitRender3D" type="MeshInstance3D" parent="VisibleWorld/EarthV" unique_id=404874734 node_paths=PackedStringArray("orbiter")]
+script = ExtResource("9_vef74")
+orbiter = NodePath("../ShipV")
+metadata/_custom_type_script = "uid://dkvatgi40k83x"
+
+[connection signal="input_event" from="VisibleWorld/EarthV" to="VisibleWorld" method="_on_earth_v_input_event"]
+[connection signal="input_event" from="VisibleWorld/EarthV/MoonV" to="VisibleWorld" method="_on_moon_v_input_event"]

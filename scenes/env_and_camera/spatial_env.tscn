@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cp7pih1ent0io"]
 
 [ext_resource type="Texture2D" uid="uid://c277cifrb61np" path="res://scenes/env_and_camera/NightSkyHDRI002_4K-HDR.exr" id="1_ltrvc"]
-[ext_resource type="Script" uid="uid://cuvap262xq3u" path="res://scenes/env_and_camera/camera_3d.gd" id="2_jpdk4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_g14j6"]
 panorama = ExtResource("1_ltrvc")
@@ -25,9 +24,9 @@ omni_range = 1000.0
 omni_attenuation = 0.1
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=464904970]
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=350388787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 500)
 fov = 30.0
 near = 0.1
-script = ExtResource("2_jpdk4")

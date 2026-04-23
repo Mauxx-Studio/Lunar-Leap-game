@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://b3j3t0pfv1xwr" path="res://assets/textures/8k_moon.jpg" id="9_264po"]
 [ext_resource type="Script" uid="uid://c66cf4i1sgrdc" path="res://scripts/ship_v.gd" id="10_1kice"]
 [ext_resource type="Script" uid="uid://dkvatgi40k83x" path="res://addons/orbital_tools/orbit_render_3d.gd" id="11_5newe"]
+[ext_resource type="Script" uid="uid://san2bxlp7bhc" path="res://scripts/icon.gd" id="11_kvuet"]
+[ext_resource type="Script" uid="uid://cuvap262xq3u" path="res://scenes/env_and_camera/camera_3d.gd" id="12_dinhu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
 albedo_texture = ExtResource("6_ca42v")
@@ -28,6 +30,11 @@ albedo_texture = ExtResource("9_264po")
 radius = 1.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lc2xo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trtic"]
+albedo_color = Color(0, 0.48557895, 3.85046e-07, 1)
+emission_enabled = true
+emission = Color(0.13725491, 0.5764706, 0.15294118, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_vef74"]
 
@@ -59,7 +66,7 @@ metadata/_custom_type_script = "uid://dwldmldpnga2m"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6800000, 0, 0)
 script = ExtResource("1_kvpfn")
 _initial_position = Vector3(6800000, 0, 0)
-_initial_velocity = Vector3(0, 0, 7656.3)
+_initial_velocity = Vector3(0, 0, -7656.3)
 related_to = NodePath("../../../VisibleWorld/EarthV/ShipV")
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
@@ -103,6 +110,16 @@ script = ExtResource("10_1kice")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV/ShipV" unique_id=1810949507]
 shape = SubResource("SphereShape3D_lc2xo")
 
+[node name="Icon" type="Node3D" parent="VisibleWorld/EarthV/ShipV" unique_id=628778720]
+script = ExtResource("11_kvuet")
+
+[node name="Cone" type="CSGCylinder3D" parent="VisibleWorld/EarthV/ShipV/Icon" unique_id=659950939]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+height = 2.5
+sides = 16
+cone = true
+material = SubResource("StandardMaterial3D_trtic")
+
 [node name="MoonVOrbit" type="MeshInstance3D" parent="VisibleWorld/EarthV" unique_id=1796362207 node_paths=PackedStringArray("orbiter")]
 extra_cull_margin = 100.0
 mesh = SubResource("ImmediateMesh_vef74")
@@ -115,5 +132,14 @@ script = ExtResource("11_5newe")
 orbiter = NodePath("../ShipV")
 metadata/_custom_type_script = "uid://dkvatgi40k83x"
 
+[node name="CameraPivot" type="Node3D" parent="VisibleWorld" unique_id=733937007]
+
+[node name="Camera3D" type="Camera3D" parent="VisibleWorld/CameraPivot" unique_id=1404531139]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+fov = 40.0
+script = ExtResource("12_dinhu")
+
 [connection signal="input_event" from="VisibleWorld/EarthV" to="VisibleWorld" method="_on_earth_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/EarthV/MoonV" to="VisibleWorld" method="_on_moon_v_input_event"]
+[connection signal="input_event" from="VisibleWorld/EarthV/ShipV" to="VisibleWorld" method="_on_ship_v_input_event"]

@@ -9,9 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://b37uhsj1lihwy" path="res://assets/textures/8k_earth_nightmap.jpg" id="7_rysoc"]
 [ext_resource type="Script" uid="uid://d18mnv8qcbk7w" path="res://scripts/moon_v.gd" id="8_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://b3j3t0pfv1xwr" path="res://assets/textures/8k_moon.jpg" id="9_264po"]
-[ext_resource type="Script" uid="uid://c66cf4i1sgrdc" path="res://scripts/ship_v.gd" id="10_1kice"]
+[ext_resource type="PackedScene" uid="uid://45hoipmtei15" path="res://scenes/ship_v.tscn" id="10_dinhu"]
 [ext_resource type="Script" uid="uid://dkvatgi40k83x" path="res://addons/orbital_tools/orbit_render_3d.gd" id="11_5newe"]
-[ext_resource type="Script" uid="uid://san2bxlp7bhc" path="res://scripts/icon.gd" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://cuvap262xq3u" path="res://scenes/env_and_camera/camera_3d.gd" id="12_dinhu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
@@ -28,13 +27,6 @@ albedo_texture = ExtResource("9_264po")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iotsf"]
 radius = 1.7
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_lc2xo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trtic"]
-albedo_color = Color(0, 0.48557895, 3.85046e-07, 1)
-emission_enabled = true
-emission = Color(0.13725491, 0.5764706, 0.15294118, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_vef74"]
 
@@ -62,12 +54,13 @@ _initial_velocity = Vector3(937.906, 0, -541.5)
 related_to = NodePath("../../../VisibleWorld/EarthV/MoonV")
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
-[node name="Ship" type="Node3D" parent="EarthSystem/Earth" unique_id=2080854534 node_paths=PackedStringArray("related_to")]
+[node name="Ship" type="Node3D" parent="EarthSystem/Earth" unique_id=2080854534]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6800000, 0, 0)
 script = ExtResource("1_kvpfn")
+mass = 10000.0
 _initial_position = Vector3(6800000, 0, 0)
 _initial_velocity = Vector3(0, 0, -7656.3)
-related_to = NodePath("../../../VisibleWorld/EarthV/ShipV")
+_show_log_msgs = false
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
 [node name="VisibleWorld" type="Node3D" parent="." unique_id=769440149]
@@ -75,10 +68,10 @@ script = ExtResource("2_dinhu")
 
 [node name="SpatialEnv" parent="VisibleWorld" unique_id=1501752903 instance=ExtResource("3_kvuet")]
 
-[node name="Node3D" type="Node3D" parent="VisibleWorld" unique_id=1029800242]
+[node name="Sun_inclination" type="Node3D" parent="VisibleWorld" unique_id=1029800242]
 transform = Transform3D(1, 0, 0, 0, 0.9170601, -0.39874908, 0, 0.39874908, 0.9170601, 0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Node3D" unique_id=2099046766]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Sun_inclination" unique_id=2099046766]
 script = ExtResource("4_trtic")
 
 [node name="EarthV" type="Area3D" parent="VisibleWorld" unique_id=1059918498]
@@ -104,21 +97,8 @@ material = SubResource("StandardMaterial3D_lc2xo")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV/MoonV" unique_id=857969080]
 shape = SubResource("SphereShape3D_iotsf")
 
-[node name="ShipV" type="Area3D" parent="VisibleWorld/EarthV" unique_id=217427543]
-script = ExtResource("10_1kice")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleWorld/EarthV/ShipV" unique_id=1810949507]
-shape = SubResource("SphereShape3D_lc2xo")
-
-[node name="Icon" type="Node3D" parent="VisibleWorld/EarthV/ShipV" unique_id=628778720]
-script = ExtResource("11_kvuet")
-
-[node name="Cone" type="CSGCylinder3D" parent="VisibleWorld/EarthV/ShipV/Icon" unique_id=659950939]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
-height = 2.5
-sides = 16
-cone = true
-material = SubResource("StandardMaterial3D_trtic")
+[node name="ShipV" parent="VisibleWorld/EarthV" unique_id=259292399 instance=ExtResource("10_dinhu")]
+engine_thrust = 100000.0
 
 [node name="MoonVOrbit" type="MeshInstance3D" parent="VisibleWorld/EarthV" unique_id=1796362207 node_paths=PackedStringArray("orbiter")]
 extra_cull_margin = 100.0

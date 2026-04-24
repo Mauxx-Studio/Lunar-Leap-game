@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://45hoipmtei15"]
+
+[ext_resource type="Script" uid="uid://c66cf4i1sgrdc" path="res://scripts/ship_v.gd" id="1_gsp4l"]
+[ext_resource type="Script" uid="uid://san2bxlp7bhc" path="res://scripts/icon.gd" id="2_5ethh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lc2xo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trtic"]
+albedo_color = Color(0, 0.32097837, 0, 1)
+emission_enabled = true
+emission = Color(0.10980392, 0.24313726, 0.047058824, 1)
+
+[node name="ShipV" type="Area3D" unique_id=259292399]
+script = ExtResource("1_gsp4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2005779089]
+shape = SubResource("SphereShape3D_lc2xo")
+
+[node name="Icon" type="Node3D" parent="." unique_id=2113645596]
+script = ExtResource("2_5ethh")
+
+[node name="Cone" type="CSGCylinder3D" parent="Icon" unique_id=1174615829]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+height = 2.5
+sides = 16
+cone = true
+material = SubResource("StandardMaterial3D_trtic")

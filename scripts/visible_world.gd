@@ -11,7 +11,7 @@ signal center_changued(center_body:Node3D)
 @onready var moon_v: Node3D = $EarthV/MoonV
 @onready var ship_v: Node3D = $EarthV/ShipV
 
-@onready var directional_light_3d: DirectionalLight3D = $Node3D/DirectionalLight3D
+@onready var directional_light_3d: DirectionalLight3D = $Sun_inclination/DirectionalLight3D
 
 @onready var camera_3d: Camera3D = %Camera3D
 

@@ -735,6 +735,11 @@ func get_apoapsis() -> Vector3:
 			return result
 	return result
 
+## gravity acceleration for use on non inertial state (thrust or atmosphere friction)
+func get_gravity() -> Vector3:
+	var f = mu_attractor / position.length() / position.length()
+	return - position.normalized() * f
+
 func _soi_entered(node: Node3D) -> void:
 	if not node is OrbitalObject3D:
 		return

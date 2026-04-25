@@ -20,10 +20,12 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if engine_on and thrust > 0: inertial = false
 	if not inertial:
+		var _ts = OrbitalManager.get_time_scale()
 		_direction = ship.get_velocity().normalized()
-		var a = ship.get_gravity() + _direction * thrust * engine_thrust /_mass / 100
-		var v = ship.get_velocity() + a * _delta
-		ship.calcule_orbit(ship.position, v)
+		var a = (ship.get_force() + _direction * thrust * engine_thrust / 100) / _mass
+		var v = ship.get_velocity() + a * _delta * _ts
+		var p = ship.position + v * _delta * _ts
+		ship.calcule_orbit(p, v)
 		if not engine_on or thrust == 0: inertial = true
 	
 	# Update the icon orientation and size
@@ -58,3 +60,7 @@ func low_thrust() -> void:
 	if thrust < 5: thrust = 0.0
 	thrust = max(0.0, thrust)
  
+func _on_ship_has_new_attractor(attractor: OrbitalObject3D) -> void:
+	var new_parent = attractor.related_to
+	if new_parent is Node3D:
+		reparent(new_parent)

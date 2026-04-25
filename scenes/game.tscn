@@ -120,6 +120,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
 fov = 40.0
 script = ExtResource("12_dinhu")
 
+[connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="input_event" from="VisibleWorld/EarthV" to="VisibleWorld" method="_on_earth_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/EarthV/MoonV" to="VisibleWorld" method="_on_moon_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/EarthV/ShipV" to="VisibleWorld" method="_on_ship_v_input_event"]

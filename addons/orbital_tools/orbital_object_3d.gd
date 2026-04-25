@@ -116,6 +116,7 @@ var attractor: OrbitalObject3D # Referencia al cuerpo central
 
 var _perifocal_transform:Transform3D
 var _last_transform: Transform3D
+var _temp_velocity: Vector3 = Vector3.ZERO
 
 # ====================================================================
 
@@ -222,7 +223,7 @@ func _get_position_at_time(t: float) -> Vector3:
 
 func _get_velocity_at_time(t: float) -> Vector3:
 	if not orbit_type:
-		return get_velocity()
+		return _temp_velocity
 	
 	var vel_perifocal: Vector3
 	
@@ -570,7 +571,8 @@ func _is_eliptic() -> bool:
 ## Returns the body's current orbital velocity, calculated as a Vector3
 func get_velocity() -> Vector3:
 	var current_time = OrbitalManager.get_current_time() - _initial_time
-	return _get_velocity_at_time(current_time)
+	_temp_velocity = _get_velocity_at_time(current_time)
+	return _temp_velocity
 
 ## Returns the eccentricity e of the current orbit as a float. This value determines the shape of the conic section (e.g., e < 1.0 for elliptic, e = 1.0 for parabolic).
 func get_eccentricity() -> float:
@@ -604,7 +606,7 @@ func get_attractor() -> OrbitalObject3D:
 func add_orbiter(orbiter:Node, new_position:Vector3, new_velocity:Vector3) -> void:
 	if not orbiter is OrbitalObject3D: return
 	var old_attractor: OrbitalObject3D = orbiter.attractor
-	if old_attractor: old_attractor.remove_orbiter(orbiter)
+#	if old_attractor: old_attractor.remove_orbiter(orbiter)
 	orbiter.attractor = self
 	orbiter._initial_position = new_position
 	orbiter._initial_velocity = new_velocity
@@ -736,8 +738,8 @@ func get_apoapsis() -> Vector3:
 	return result
 
 ## gravity acceleration for use on non inertial state (thrust or atmosphere friction)
-func get_gravity() -> Vector3:
-	var f = mu_attractor / position.length() / position.length()
+func get_force() -> Vector3:
+	var f = mu_attractor * mass / position.length() / position.length()
 	return - position.normalized() * f
 
 func _soi_entered(node: Node3D) -> void:

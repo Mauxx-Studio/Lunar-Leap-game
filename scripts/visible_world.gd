@@ -3,6 +3,11 @@ extends Node3D
 
 signal center_changued(center_body:Node3D)
 
+@export var v_scale: float = 0.000001
+
+var _center_body: Node3D
+var _center_position: Vector3
+
 @onready var earth: OrbitalObject3D = $"../EarthSystem/Earth"
 @onready var moon: OrbitalObject3D = $"../EarthSystem/Earth/Moon"
 @onready var ship: OrbitalObject3D = $"../EarthSystem/Earth/Ship"
@@ -14,11 +19,6 @@ signal center_changued(center_body:Node3D)
 @onready var directional_light_3d: DirectionalLight3D = $Sun_inclination/DirectionalLight3D
 
 @onready var camera_3d: Camera3D = %Camera3D
-
-@export var v_scale: float = 0.000001
-
-var _center_body: Node3D
-var _center_position: Vector3
 
 func _ready() -> void:
 	earth_v.set_radius(earth.radius * v_scale)

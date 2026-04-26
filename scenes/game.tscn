@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dkvatgi40k83x" path="res://addons/orbital_tools/orbit_render_3d.gd" id="11_5newe"]
 [ext_resource type="Script" uid="uid://cuvap262xq3u" path="res://scenes/env_and_camera/camera_3d.gd" id="12_dinhu"]
 [ext_resource type="Script" uid="uid://doxc10dlbf02j" path="res://scripts/orbital_info.gd" id="13_kvuet"]
+[ext_resource type="Script" uid="uid://c6bhmfes7u88o" path="res://scripts/time_info.gd" id="14_trtic"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
 albedo_texture = ExtResource("6_ca42v")
@@ -127,10 +128,19 @@ script = ExtResource("12_dinhu")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 40.0
+offset_left = 5.0
+offset_top = -25.0
+offset_right = 45.0
+offset_bottom = -2.0
 grow_vertical = 0
 script = ExtResource("13_kvuet")
+
+[node name="TimeInfo" type="Label" parent="VisibleWorld/Hud" unique_id=140876982]
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 46.0
+offset_bottom = 25.0
+script = ExtResource("14_trtic")
 
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="orbit_changed" from="EarthSystem/Earth/Ship" to="VisibleWorld/Hud/OrbitalInfo" method="_on_ship_orbit_changed"]

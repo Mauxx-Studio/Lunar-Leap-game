@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 func get_trajectory(segments:int) -> Array[Vector3]:
 	var result = ship.get_trajectory(segments)
 	for i in result.size():
-		result[i] *= visible_world.v_scale
+		result[i] *= GameManager.view_scale
 	return result
 
 # relative thrust, varies between 0 and 100 %

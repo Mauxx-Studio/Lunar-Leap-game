@@ -3,8 +3,7 @@ extends Node3D
 
 signal center_changued(center_body:Node3D)
 
-@export var v_scale: float = 0.000001
-
+var _v_scale: float
 var _center_body: Node3D
 var _center_position: Vector3
 
@@ -21,15 +20,16 @@ var _center_position: Vector3
 @onready var camera_3d: Camera3D = %Camera3D
 
 func _ready() -> void:
-	earth_v.set_radius(earth.radius * v_scale)
-	moon_v.set_radius(moon.radius * v_scale)
+	_v_scale = GameManager.view_scale
+	earth_v.set_radius(earth.radius * _v_scale)
+	moon_v.set_radius(moon.radius * _v_scale)
 	_center_body = earth
 
 func _process(_delta: float) -> void:
 	_center_position = _center_position.lerp(_center_body.position, _delta * 2)
-	earth_v.position = (earth.position - _center_position) * v_scale
-	moon_v.position = moon.position * v_scale
-	ship_v.position = ship.position * v_scale
+	earth_v.position = (earth.position - _center_position) * _v_scale
+	moon_v.position = moon.position * _v_scale
+	ship_v.position = ship.position * _v_scale
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("raise_time_scale"):

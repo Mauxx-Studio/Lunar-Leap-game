@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://cuvap262xq3u" path="res://scenes/env_and_camera/camera_3d.gd" id="12_dinhu"]
 [ext_resource type="Script" uid="uid://doxc10dlbf02j" path="res://scripts/orbital_info.gd" id="13_kvuet"]
 [ext_resource type="Script" uid="uid://c6bhmfes7u88o" path="res://scripts/time_info.gd" id="14_trtic"]
+[ext_resource type="Script" uid="uid://c446l7v81mnlx" path="res://scripts/thrust_info.gd" id="15_ir15t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
 albedo_texture = ExtResource("6_ca42v")
@@ -31,6 +32,35 @@ albedo_texture = ExtResource("9_264po")
 radius = 1.7
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_vef74"]
+
+[sub_resource type="SystemFont" id="SystemFont_trtic"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ir15t"]
+font = SubResource("SystemFont_trtic")
+font_size = 18
+font_color = Color(1, 1, 0.7058824, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0.2509804, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_ir15t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ca42v"]
+line_spacing = 1.0
+font = SubResource("SystemFont_ir15t")
+font_size = 18
+font_color = Color(1, 1, 0.74509805, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0.24313726, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_ca42v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
+line_spacing = 1.0
+font = SubResource("SystemFont_ca42v")
+font_size = 18
+font_color = Color(1, 1, 0.7294118, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0.25882354, 1)
 
 [node name="Game" type="Node" unique_id=535765069]
 
@@ -133,6 +163,7 @@ offset_top = -25.0
 offset_right = 45.0
 offset_bottom = -2.0
 grow_vertical = 0
+label_settings = SubResource("LabelSettings_ir15t")
 script = ExtResource("13_kvuet")
 
 [node name="TimeInfo" type="Label" parent="VisibleWorld/Hud" unique_id=140876982]
@@ -140,7 +171,53 @@ offset_left = 6.0
 offset_top = 2.0
 offset_right = 46.0
 offset_bottom = 25.0
+label_settings = SubResource("LabelSettings_ca42v")
 script = ExtResource("14_trtic")
+
+[node name="ThrustContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=33388708]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -79.0
+offset_top = -61.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ThrustInfo" type="Label" parent="VisibleWorld/Hud/ThrustContainer" unique_id=4016250]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_rysoc")
+script = ExtResource("15_ir15t")
+
+[node name="AttitudeContainer" type="HBoxContainer" parent="VisibleWorld/Hud" unique_id=1506505027]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.5
+offset_top = -40.0
+offset_right = 39.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Prograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=736144250]
+layout_mode = 2
+toggle_mode = true
+text = "Prograde"
+
+[node name="Retrograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=512362024]
+layout_mode = 2
+text = "Retrograde"
+
+[node name="Normal" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=857178521]
+layout_mode = 2
+text = "Normal"
+
+[node name="AntiN" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=1580197268]
+layout_mode = 2
+text = "Anti N"
 
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="orbit_changed" from="EarthSystem/Earth/Ship" to="VisibleWorld/Hud/OrbitalInfo" method="_on_ship_orbit_changed"]

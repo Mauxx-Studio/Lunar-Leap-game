@@ -11,11 +11,11 @@ func _process(_delta: float) -> void:
 	
 	var peri:float = (ship.get_periapsis().length() - ship.attractor.radius)
 	var peri_unit:String =""
-	if peri > 10_000_000:
+	if peri > 1_000_000:
 		peri /= 1e6
 		peri_unit = " Mm"
 	elif peri > 10_000:
-		peri /= 10_000
+		peri /= 1_000
 		peri_unit = " km"
 	else: peri_unit = " m"
 	var str1: String = "Periapsis = %.2f" % peri + peri_unit
@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 		apo /= 1e6
 		apo_unit = " Mm"
 	elif apo > 10_000:
-		apo /= 10_000
+		apo /= 1_000
 		apo_unit = " km"
 	else: apo_unit = " m"
 	var str2: String = "Apoapsis = %.2f" % apo + apo_unit

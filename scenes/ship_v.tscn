@@ -20,7 +20,6 @@ shape = SubResource("SphereShape3D_lc2xo")
 script = ExtResource("2_5ethh")
 
 [node name="Cone" type="CSGCylinder3D" parent="Icon" unique_id=1174615829]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
 height = 2.5
 sides = 16
 cone = true

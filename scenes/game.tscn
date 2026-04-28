@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://doxc10dlbf02j" path="res://scripts/orbital_info.gd" id="13_kvuet"]
 [ext_resource type="Script" uid="uid://c6bhmfes7u88o" path="res://scripts/time_info.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://c446l7v81mnlx" path="res://scripts/thrust_info.gd" id="15_ir15t"]
+[ext_resource type="ButtonGroup" uid="uid://dgk3pacbc1r0l" path="res://attitude_control_button_group.tres" id="16_ca42v"]
+[ext_resource type="Script" uid="uid://bvbhnt4kn28rc" path="res://scripts/attitude_controller.gd" id="16_rysoc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
 albedo_texture = ExtResource("6_ca42v")
@@ -52,6 +54,8 @@ font_color = Color(1, 1, 0.74509805, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0.24313726, 1)
 
+[sub_resource type="Theme" id="Theme_ca42v"]
+
 [sub_resource type="SystemFont" id="SystemFont_ca42v"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
@@ -61,6 +65,8 @@ font_size = 18
 font_color = Color(1, 1, 0.7294118, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0.25882354, 1)
+
+[sub_resource type="Theme" id="Theme_ir15t"]
 
 [node name="Game" type="Node" unique_id=535765069]
 
@@ -180,15 +186,23 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -79.0
-offset_top = -61.0
+offset_left = -157.0
+offset_top = -45.0
+offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 0
 
 [node name="ThrustInfo" type="Label" parent="VisibleWorld/Hud/ThrustContainer" unique_id=4016250]
 layout_mode = 2
+theme = SubResource("Theme_ca42v")
 label_settings = SubResource("LabelSettings_rysoc")
+horizontal_alignment = 1
 script = ExtResource("15_ir15t")
+
+[node name="ProgressBar" type="ProgressBar" parent="VisibleWorld/Hud/ThrustContainer" unique_id=869070228]
+layout_mode = 2
+theme = SubResource("Theme_ir15t")
+show_percentage = false
 
 [node name="AttitudeContainer" type="HBoxContainer" parent="VisibleWorld/Hud" unique_id=1506505027]
 anchors_preset = 7
@@ -201,22 +215,30 @@ offset_top = -40.0
 offset_right = 39.5
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("16_rysoc")
 
 [node name="Prograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=736144250]
 layout_mode = 2
 toggle_mode = true
+button_group = ExtResource("16_ca42v")
 text = "Prograde"
 
 [node name="Retrograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=512362024]
 layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
 text = "Retrograde"
 
 [node name="Normal" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=857178521]
 layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
 text = "Normal"
 
 [node name="AntiN" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=1580197268]
 layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
 text = "Anti N"
 
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/EarthV/ShipV" method="_on_ship_has_new_attractor"]
@@ -224,3 +246,7 @@ text = "Anti N"
 [connection signal="input_event" from="VisibleWorld/EarthV" to="VisibleWorld" method="_on_earth_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/EarthV/MoonV" to="VisibleWorld" method="_on_moon_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/EarthV/ShipV" to="VisibleWorld" method="_on_ship_v_input_event"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Prograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_prograde_toggled"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Retrograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_retrograde_toggled"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Normal" to="VisibleWorld/Hud/AttitudeContainer" method="_on_normal_toggled"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/AntiN" to="VisibleWorld/Hud/AttitudeContainer" method="_on_anti_n_toggled"]

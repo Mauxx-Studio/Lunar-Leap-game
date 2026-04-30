@@ -9,6 +9,12 @@ var engine_on: bool = false
 var _direction: Vector3 = Vector3(0, 1, 0)
 var _mass: float
 
+var _autorotate: bool
+var _autorotation: Callable
+var _is_rotating
+
+var tween_autorot: Tween
+
 @onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
 @onready var visible_world: Node3D = $"../.."
 @onready var icon: Node3D = $Icon
@@ -52,6 +58,13 @@ func _process(_delta: float) -> void:
 		basis = basis.rotated(Vector3.BACK, ang * _delta)
 	if Input.is_action_pressed("attitude_rot_right"):
 		basis = basis.rotated(Vector3.BACK, - ang * _delta)
+	
+	# attitude auto
+	if _autorotate:
+		var new_basis = _autorotation.call(ship.get_velocity(), ship.position)
+		smooth_rotate_2(new_basis)
+	else : _is_rotating = false
+
 
 func _input(event: InputEvent) -> void:
 	# Engine turn on or off with the same key
@@ -90,3 +103,36 @@ func _on_ship_has_new_attractor(attractor: OrbitalObject3D) -> void:
 	var new_parent = attractor.related_to
 	if new_parent is Node3D:
 		reparent(new_parent)
+
+
+func _on_attitude_container_attitude_contorller(auto:bool, autorotation: Callable) -> void:
+	_autorotate = auto
+	_autorotation = autorotation
+
+func smooth_rotate(new_basis:Basis) -> Basis:
+	var rot1 = basis.y.angle_to(new_basis.y)
+	if rot1 < .1:
+		var rot2 = basis.x.angle_to(new_basis.x)
+		if rot2 < 0.1:
+			_is_rotating = false
+			return new_basis
+		return basis.rotated(basis.y, 0.05)
+		
+	var axis: Vector3
+	if absf(rot1 - PI) <0.1 : axis = basis.z
+	else: axis = basis.y.cross(new_basis.y).normalized()
+	
+	print(rot1)
+	return basis.rotated(axis, 0.05)
+
+func smooth_rotate_2(new_basis:Basis, duration: float = 1.5) -> void:
+	if tween_autorot and tween_autorot.is_running():
+		tween_autorot.kill()
+	
+	tween_autorot = create_tween()
+	
+	var target_qua = new_basis.get_rotation_quaternion()
+	
+	tween_autorot.tween_property(self, "quaternion", target_qua, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	

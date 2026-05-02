@@ -4,7 +4,7 @@ extends Node3D
 
 const RELATION: float = 120
 
-func update(ship_velocity: Vector3, ship_position: Vector3, camera_g_position: Vector3) -> void:
+func update(_ship_velocity: Vector3, _ship_position: Vector3, camera_g_position: Vector3) -> void:
 	#var i_icon = ship_velocity.normalized()
 	#var j_icon = ship_position.cross(i_icon).normalized()
 	#basis = Basis(i_icon,j_icon,i_icon.cross(j_icon))

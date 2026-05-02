@@ -25,49 +25,49 @@ signal has_new_attractor(attractor:OrbitalObject3D)
 @export var mass: float = 1.0
 @export var radius: float = 0.5
 
-var vel_basis:Basis
-@export_group("Initial position espherical", "pos_")
-@export var pos_radius: float = 0.0:
-	set(v):
-		pos_radius = maxf(0.0, v)
-		_update_position()
-@export_range(0.0,360.0,0.1,"º") var pos_theta: float = 0.0:
-	set(v):
-		pos_theta = v
-		_update_position()
-@export_range(-90,90,0.1,"º") var pos_phi: float = 0.0:
-	set(v):
-		pos_phi = v
-		_update_position()
-func _update_position():
-	var x:float = pos_radius * cos(deg_to_rad(pos_phi)) * cos(deg_to_rad(pos_theta))
-	var y:float = pos_radius * cos(deg_to_rad(pos_phi)) * sin(deg_to_rad(pos_theta))
-	var z:float = pos_radius * sin(deg_to_rad(pos_phi))
-	_initial_position = Vector3(x, y, z)
-	var i = Vector3(x, y, z).normalized()
-	var j = -i.cross(Vector3(0,0,1)).normalized()
-	var k = i.cross(j).normalized()
-	vel_basis = Basis(i, j, k)
-	_update_velocity()
-
-@export_group("Initial velocity espherical", "vel_")
-@export var vel_speed:float = 0.0:
-	set(v):
-		vel_speed = v
-		_update_velocity()
-@export_range(-90,90,0.1,"º") var vel_elevation:float = 0.0:
-	set(v):
-		vel_elevation = v
-		_update_velocity()
-@export_range(-90,90,0.1,"º") var vel_azimuth:float = 0.0:
-	set(v):
-		vel_azimuth = v
-		_update_velocity()
-func _update_velocity():
-	var x = vel_speed * cos(deg_to_rad(vel_azimuth)) * sin(deg_to_rad(vel_elevation))
-	var y = vel_speed * cos(deg_to_rad(vel_azimuth)) * cos(deg_to_rad(vel_elevation))
-	var z = vel_speed * sin(deg_to_rad(vel_azimuth))
-	_initial_velocity = vel_basis * Vector3(x, y, z)
+#var vel_basis:Basis
+#@export_group("Initial position espherical", "pos_")
+#@export var pos_radius: float = 0.0:
+	#set(v):
+		#pos_radius = maxf(0.0, v)
+		#_update_position()
+#@export_range(0.0,360.0,0.1,"º") var pos_theta: float = 0.0:
+	#set(v):
+		#pos_theta = v
+		#_update_position()
+#@export_range(-90,90,0.1,"º") var pos_phi: float = 0.0:
+	#set(v):
+		#pos_phi = v
+		#_update_position()
+#func _update_position():
+	#var x:float = pos_radius * cos(deg_to_rad(pos_phi)) * cos(deg_to_rad(pos_theta))
+	#var y:float = pos_radius * cos(deg_to_rad(pos_phi)) * sin(deg_to_rad(pos_theta))
+	#var z:float = pos_radius * sin(deg_to_rad(pos_phi))
+	#_initial_position = Vector3(x, y, z)
+	#var i = Vector3(x, y, z).normalized()
+	#var j = -i.cross(Vector3(0,0,1)).normalized()
+	#var k = i.cross(j).normalized()
+	#vel_basis = Basis(i, j, k)
+	#_update_velocity()
+#
+#@export_group("Initial velocity espherical", "vel_")
+#@export var vel_speed:float = 0.0:
+	#set(v):
+		#vel_speed = v
+		#_update_velocity()
+#@export_range(-90,90,0.1,"º") var vel_elevation:float = 0.0:
+	#set(v):
+		#vel_elevation = v
+		#_update_velocity()
+#@export_range(-90,90,0.1,"º") var vel_azimuth:float = 0.0:
+	#set(v):
+		#vel_azimuth = v
+		#_update_velocity()
+#func _update_velocity():
+	#var x = vel_speed * cos(deg_to_rad(vel_azimuth)) * sin(deg_to_rad(vel_elevation))
+	#var y = vel_speed * cos(deg_to_rad(vel_azimuth)) * cos(deg_to_rad(vel_elevation))
+	#var z = vel_speed * sin(deg_to_rad(vel_azimuth))
+	#_initial_velocity = vel_basis * Vector3(x, y, z)
 
 @export var _initial_position: Vector3= Vector3.ZERO: set = _set_initial_position
 @export var _initial_velocity: Vector3 = Vector3.ZERO: set = _set_initial_velocity
@@ -78,7 +78,6 @@ func _update_velocity():
 ## The classification of the current trajectory determined by the calculated eccentricity e and specific energy. This is an enum value (ORBITS_TYPES) indicating whether the orbit is radial, elliptic, parabolic, or hyperbolic.
 var orbit_type: ORBITS_TYPES = ORBITS_TYPES.INDETERMINATE
 var _initial_time:float
-## Use to load references to another node; not used in orbital calculations.
 func _set_initial_position(v:Vector3):
 	_initial_position = v
 	if Engine.is_editor_hint():
@@ -218,7 +217,6 @@ func _get_position_at_time(t: float) -> Vector3:
 		
 		ORBITS_TYPES.PARABOLIC:
 			return position
-			
 	return _perifocal_transform.basis * pos_perifocal
 
 func _get_velocity_at_time(t: float) -> Vector3:
@@ -275,7 +273,7 @@ func _get_velocity_at_time(t: float) -> Vector3:
 			vel_perifocal = Vector3(xp_dot, yp_dot, 0.0)
 		
 		ORBITS_TYPES.PARABOLIC:
-			return get_velocity()
+			return _temp_velocity
 			
 	return _perifocal_transform.basis * vel_perifocal
 
@@ -314,7 +312,7 @@ func _calculate_orbital_elements(r_vec: Vector3, v_vec:Vector3, attractor: Orbit
 	var r = r_vec.length()
 	var v = v_vec.length()
 	var mu = mu_attractor
-
+	
 	# 1. Momento Angular Específico (h)
 	var h_vec = r_vec.cross(v_vec)
 	var h = h_vec.length()
@@ -340,10 +338,8 @@ func _calculate_orbital_elements(r_vec: Vector3, v_vec:Vector3, attractor: Orbit
 	# 3. Energía Orbital Específica (epsilon) y Eje Semimayor (a)
 	var epsilon = (v*v / 2.0) - (mu / r)
 	# Lógica para manejar los tres tipos de órbita basados en epsilon:
-	if abs(epsilon) < 1e-6:
+	if abs(epsilon) < 1e-3 * mu / r:
 		# **Órbita Parabólica (Escape Justo):** a = INF
-		semi_major_axis = INF
-		eccentricity = 1.0
 		if _show_log_msgs: print("Parabolic Orbit")
 		var dv:float = 0.001
 		var result: int
@@ -351,6 +347,7 @@ func _calculate_orbital_elements(r_vec: Vector3, v_vec:Vector3, attractor: Orbit
 			result = calcule_orbit(r_vec,v_vec * (1.0 + dv))
 		else:
 			result = calcule_orbit(r_vec,v_vec * (1.0 - dv))
+		orbit_type = result
 		return result
 	elif epsilon < 0:
 		# **Órbita Elíptica (Cerrada):** a > 0
@@ -388,7 +385,7 @@ func _calculate_orbital_transform(h_vec: Vector3, e_vec: Vector3, attractor: Orb
 	var i_axis: Vector3 = e_vec.normalized()  # X (Al Periapsis)
 	var j_axis: Vector3 = k_axis.cross(i_axis) # Y (Complementario)
 	# 2. Construir la Basis (Rotación)
-	var per_basis = Basis(i_axis, j_axis, k_axis)
+	var per_basis = Basis(i_axis, j_axis, k_axis).orthonormalized()
 	return Transform3D(per_basis, attractor.position)
 
 # Convierte la Anomalía Verdadera (nu) a Anomalía Media (M)
@@ -737,7 +734,7 @@ func get_apoapsis() -> Vector3:
 			return result
 	return result
 
-## gravity acceleration for use on non inertial state (thrust or atmosphere friction)
+## It returns gravitational force for use in a non-inertial state.
 func get_force() -> Vector3:
 	var f = mu_attractor * mass / position.length() / position.length()
 	return - position.normalized() * f

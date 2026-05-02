@@ -28,12 +28,13 @@ func _process(_delta: float) -> void:
 	if engine_on and thrust > 0: inertial = false
 	if not inertial:
 		var _ts = OrbitalManager.get_time_scale()
-		#_direction = ship.get_velocity().normalized()
+		if _ts > 8:
+			OrbitalManager.set_time_scale(8)
+			_ts = OrbitalManager.get_time_scale()
 		var a = (ship.get_force() + basis * _direction * thrust * engine_thrust / 100) / _mass
 		var v = ship.get_velocity() + a * _delta * _ts
-		print(ship.get_velocity().angle_to(basis * _direction))
 		var p = ship.position + v * _delta * _ts
-		ship.calcule_orbit(p, v)
+		if ship.get_velocity().length() > 10 : ship.calcule_orbit(p, v)
 		if not engine_on or thrust == 0: inertial = true
 	
 	# Update the icon orientation and size
@@ -125,7 +126,7 @@ func smooth_rotate(new_basis:Basis) -> Basis:
 	print(rot1)
 	return basis.rotated(axis, 0.05)
 
-func smooth_rotate_2(new_basis:Basis, duration: float = 1.5) -> void:
+func smooth_rotate_2(new_basis:Basis, duration: float = 0.8) -> void:
 	if tween_autorot and tween_autorot.is_running():
 		tween_autorot.kill()
 	

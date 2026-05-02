@@ -9,7 +9,8 @@ func _process(_delta: float) -> void:
 	
 	var str0:String = "Speed = %.2f m/s" % ship.get_velocity().length()  
 	
-	var peri:float = (ship.get_periapsis().length() - ship.attractor.radius)
+	var peri:float = ship.get_periapsis().length()
+	if ship.attractor: peri-= ship.attractor.radius
 	var peri_unit:String =""
 	if peri > 1_000_000:
 		peri /= 1e6
@@ -20,7 +21,8 @@ func _process(_delta: float) -> void:
 	else: peri_unit = " m"
 	var str1: String = "Periapsis = %.2f" % peri + peri_unit
 	
-	var apo: float = ship.get_apoapsis().length() - ship.attractor.radius
+	var apo: float = ship.get_apoapsis().length() 
+	if ship.attractor: apo -= ship.attractor.radius
 	var apo_unit:String = ""
 	if apo > 10_000_000:
 		apo /= 1e6

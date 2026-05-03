@@ -1,5 +1,5 @@
 # Lunar Leap
-![Lunar Leap](images/Captura lunar leap.PNG)
+![Lunar Leap](images/lunar_leap.jpg)
 
 **A realistic orbital mechanics space simulator** made in **Godot 4**.
 

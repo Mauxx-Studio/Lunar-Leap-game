@@ -15,10 +15,9 @@ var _is_rotating
 
 var tween_autorot: Tween
 
-@onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
-@onready var visible_world: Node3D = $"../.."
+@onready var ship: OrbitalObject3D = $"../../../../EarthSystem/Earth/Ship"
 @onready var icon: Node3D = $Icon
-@onready var camera_3d: Camera3D = %Camera3D
+@onready var camera_map_view: Camera3D = %CameraMapView
 
 func _ready() -> void:
 	_mass = ship.mass
@@ -38,7 +37,7 @@ func _process(_delta: float) -> void:
 		if not engine_on or thrust == 0: inertial = true
 	
 	# Update the icon orientation and size
-	icon.update(ship.get_velocity(), position, camera_3d.global_position)
+	icon.update(ship.get_velocity(), position, camera_map_view.global_position)
 	# Variation of thrust
 	if Input.is_action_pressed("raise_thrust"):
 		raise_thrust()

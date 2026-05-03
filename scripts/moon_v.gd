@@ -2,8 +2,8 @@
 extends Area3D
 
 @onready var csg_sphere_3d: CSGSphere3D = $CSGSphere3D
-@onready var moon: OrbitalObject3D = $"../../../EarthSystem/Earth/Moon"
-@onready var visible_world: Node3D = $"../.."
+@onready var moon: OrbitalObject3D = $"../../../../EarthSystem/Earth/Moon"
+
 
 func set_radius(r:float) -> void:
 	csg_sphere_3d.radius = r

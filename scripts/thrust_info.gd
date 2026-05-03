@@ -1,6 +1,6 @@
 extends Label
 
-@onready var ship_v: Area3D = $"../../../EarthV/ShipV"
+@onready var ship_v: Area3D = $"../../../MapView/EarthV/ShipV"
 @onready var progress_bar: ProgressBar = $"../ProgressBar"
 
 

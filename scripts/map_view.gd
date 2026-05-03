@@ -7,17 +7,13 @@ var _v_scale: float
 var _center_body: Node3D
 var _center_position: Vector3
 
-@onready var earth: OrbitalObject3D = $"../EarthSystem/Earth"
-@onready var moon: OrbitalObject3D = $"../EarthSystem/Earth/Moon"
-@onready var ship: OrbitalObject3D = $"../EarthSystem/Earth/Ship"
+@onready var earth: OrbitalObject3D = $"../../EarthSystem/Earth"
+@onready var moon: OrbitalObject3D = $"../../EarthSystem/Earth/Moon"
+@onready var ship: OrbitalObject3D = $"../../EarthSystem/Earth/Ship"
 
 @onready var earth_v: Node3D = $EarthV
-@onready var moon_v: Node3D = $EarthV/MoonV
-@onready var ship_v: Node3D = $EarthV/ShipV
-
-@onready var directional_light_3d: DirectionalLight3D = $Sun_inclination/DirectionalLight3D
-
-@onready var camera_3d: Camera3D = %Camera3D
+@onready var moon_v: Area3D = $EarthV/MoonV
+@onready var ship_v: Area3D = $EarthV/ShipV
 
 func _ready() -> void:
 	_v_scale = GameManager.view_scale

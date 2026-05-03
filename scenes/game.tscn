@@ -238,6 +238,18 @@ toggle_mode = true
 button_group = ExtResource("16_ca42v")
 text = "Anti N"
 
+[node name="RadialIn" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=2003694285]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
+text = "Radial In"
+
+[node name="RadialOut" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=1737471516]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
+text = "Radial Out"
+
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="orbit_changed" from="EarthSystem/Earth/Ship" to="VisibleWorld/Hud/OrbitalInfo" method="_on_ship_orbit_changed"]
 [connection signal="input_event" from="VisibleWorld/EarthV" to="VisibleWorld" method="_on_earth_v_input_event"]
@@ -248,3 +260,5 @@ text = "Anti N"
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Retrograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_retrograde_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Normal" to="VisibleWorld/Hud/AttitudeContainer" method="_on_normal_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/AntiN" to="VisibleWorld/Hud/AttitudeContainer" method="_on_anti_n_toggled"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/RadialIn" to="VisibleWorld/Hud/AttitudeContainer" method="_on_radial_in_toggled"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/RadialOut" to="VisibleWorld/Hud/AttitudeContainer" method="_on_radial_out_toggled"]

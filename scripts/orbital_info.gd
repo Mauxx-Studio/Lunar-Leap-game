@@ -7,35 +7,30 @@ func _process(_delta: float) -> void:
 	if update: return
 	if ship.get_periapsis().length() == 0: return
 	
-	var str0:String = "Speed = %.2f m/s" % ship.get_velocity().length()  
+	var vel = ship.get_velocity().length()
+	var str0:String = "Speed = " + magnitude_to_string(vel, "m/s")  
 	
 	var peri:float = ship.get_periapsis().length()
 	if ship.attractor: peri-= ship.attractor.radius
-	var peri_unit:String =""
-	if peri > 1_000_000:
-		peri /= 1e6
-		peri_unit = " Mm"
-	elif peri > 10_000:
-		peri /= 1_000
-		peri_unit = " km"
-	else: peri_unit = " m"
-	var str1: String = "Periapsis = %.2f" % peri + peri_unit
+	var str1: String = "Periapsis = " + magnitude_to_string(peri, "m")
 	
 	var apo: float = ship.get_apoapsis().length() 
 	if ship.attractor: apo -= ship.attractor.radius
-	var apo_unit:String = ""
-	if apo > 10_000_000:
-		apo /= 1e6
-		apo_unit = " Mm"
-	elif apo > 10_000:
-		apo /= 1_000
-		apo_unit = " km"
-	else: apo_unit = " m"
-	var str2: String = "Apoapsis = %.2f" % apo + apo_unit
+	var str2: String = "Apoapsis = " + magnitude_to_string(apo, "m")
 	
 	text = str0 + "\n" +str1 + "\n" + str2
 	
 	update = true
+
+func magnitude_to_string(value:float, unit:String) -> String:
+	if value > 10_000_000:
+		value /= 1e6
+		unit = " M" + unit
+	elif value > 10_000:
+		value /= 1_000
+		unit = " k" + unit
+	else: unit = " " + unit
+	return "%.2f" %value + unit
 
 func _on_ship_orbit_changed() -> void:
 	update = false

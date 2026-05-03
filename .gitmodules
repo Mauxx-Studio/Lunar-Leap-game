@@ -1,3 +1,3 @@
-[submodule "orbital_tools"]
-	path = orbital_tools
+[submodule "addons/orbital_tools"]
+	path = addons/orbital_tools
 	url = https://github.com/Mauxx-Studio/orbital_tools.git

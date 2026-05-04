@@ -9,8 +9,8 @@ var is_rotating:bool = false
 var last_mouse_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-	#make_current()
-	#GameManager.current_cam = self
+	make_current()
+	GameManager.current_cam = self
 	
 	if not InputMap.has_action("zoom_in"):
 		InputMap.add_action("zoom_in")
@@ -45,12 +45,3 @@ func _input(event: InputEvent) -> void:
 		position.z *= (1 - zoom_speed)
 	if event.is_action_pressed("zoom_out",true):
 		position.z *= (1 + zoom_speed)
-
-func _on_change_view_button_down() -> void:
-	if GameManager.current_cam == self:
-		clear_current()
-	else:
-		make_current()
-		GameManager.current_cam = self
-		print(self)
-	

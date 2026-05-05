@@ -29,6 +29,7 @@ func _ready() -> void:
 		InputMap.action_add_event("rotate_camera",wheel_up)
 
 func _input(event: InputEvent) -> void:
+	if not GameManager.current_cam == self: return
 	if event.is_action_pressed("rotate_camera"):
 		is_rotating = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

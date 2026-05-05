@@ -9,6 +9,7 @@ var last_mouse_pos: Vector2 = Vector2.ZERO
 @onready var camera_pivot: Node3D = $".."
 
 func _input(event: InputEvent) -> void:
+	if not GameManager.current_cam == self: return
 	if event.is_action_pressed("rotate_camera"):
 		is_rotating = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

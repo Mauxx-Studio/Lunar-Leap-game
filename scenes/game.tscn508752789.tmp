@@ -110,12 +110,12 @@ related_to = NodePath("../../VisibleWorld/MapView/EarthV")
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
 [node name="Moon" type="Node3D" parent="EarthSystem/Earth" unique_id=221041121 node_paths=PackedStringArray("related_to")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -179250000, 0, -310470100)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179250000, 0, 310470100)
 script = ExtResource("1_kvpfn")
 mass = 7.349e+22
 radius = 1737400.0
-_initial_position = Vector3(-179250000, 0, -310470100)
-_initial_velocity = Vector3(-937.906, 0, 541.5)
+_initial_position = Vector3(179250000, 0, 310470100)
+_initial_velocity = Vector3(937.906, 0, -541.5)
 related_to = NodePath("../../../VisibleWorld/MapView/EarthV/MoonV")
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
@@ -192,7 +192,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
 fov = 40.0
 script = ExtResource("13_264po")
-zoom_speed = 0.08
+zoom_speed = 0.05
 
 [node name="ShipView" type="Node3D" parent="VisibleWorld" unique_id=548966789]
 script = ExtResource("15_e1j6l")

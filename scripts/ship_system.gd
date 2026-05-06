@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var engine_thrust:float
+@export var thrust_change_rate:float = 4
 
 var inertial:bool = true
 var thrust:float = 0.0
@@ -34,10 +35,10 @@ func _process(_delta: float) -> void:
 	
 	# Variation of thrust
 	if Input.is_action_pressed("raise_thrust"):
-		raise_thrust()
+		raise_thrust(_delta)
 		if engine_on: ship_model.set_flame(thrust)
 	if Input.is_action_pressed("low_thrust"):
-		low_thrust()
+		low_thrust(_delta)
 		if engine_on: ship_model.set_flame(thrust)
 	
 	# attitude manual control
@@ -71,14 +72,16 @@ func _input(event: InputEvent) -> void:
 		else: ship_model.set_flame(0.0)
 
 # relative thrust, varies between 0 and 100 %
-func raise_thrust() -> void:
-	thrust *= 1.05
-	if thrust == 0: thrust = 5
+func raise_thrust(delta:float) -> void:
+	var change = delta * thrust_change_rate
+	thrust *= 1 + change
+	if thrust == 0: thrust = change * 10
 	thrust = min(thrust, 100)
 
-func low_thrust() -> void:
-	thrust *= 0.95
-	if thrust < 5: thrust = 0.0
+func low_thrust(delta:float) -> void:
+	var change = delta * thrust_change_rate
+	thrust *= 1 - change
+	if thrust < change * 10: thrust = 0.0
 	thrust = max(0.0, thrust)
 
 func _align_basis_to(current_basis:Basis, target_direction_y: Vector3) -> Basis:

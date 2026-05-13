@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends VBoxContainer
 
 signal attitude_contorller(auto:bool, autorotation: Callable)
 

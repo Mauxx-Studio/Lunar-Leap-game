@@ -27,14 +27,6 @@ func _process(_delta: float) -> void:
 	moon_v.global_position = (moon.global_position - _center_global_position) * _v_scale
 	ship_v.global_position = (ship.global_position - _center_global_position) * _v_scale
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("raise_time_scale"):
-		OrbitalManager.set_time_scale(OrbitalManager.get_time_scale() * 2)
-	if event.is_action_pressed("low_time_scale"):
-		var t_s = OrbitalManager.get_time_scale() / 2
-		t_s = max(1.0, t_s)
-		OrbitalManager.set_time_scale(t_s)
-
 # Cambio de centro de camara a la Luna
 func _on_moon_v_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:

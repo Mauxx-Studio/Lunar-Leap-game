@@ -44,17 +44,23 @@ func _process(_delta: float) -> void:
 	# attitude manual control
 	var ang:float = 1
 	if Input.is_action_pressed("attitude_down"):
-		basis = basis.rotated(Vector3.LEFT, ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.x, - ang * _delta)
 	if Input.is_action_pressed("attitude_up"):
-		basis = basis.rotated(Vector3.LEFT, - ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.x, ang * _delta)
 	if Input.is_action_pressed("attitude_left"):
-		basis = basis.rotated(Vector3.UP, ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.z, ang * _delta)
 	if Input.is_action_pressed("attitude_right"):
-		basis = basis.rotated(Vector3.UP, - ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.z, - ang * _delta)
 	if Input.is_action_pressed("attitude_rot_left"):
-		basis = basis.rotated(Vector3.BACK, ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.y, - ang * _delta)
 	if Input.is_action_pressed("attitude_rot_right"):
-		basis = basis.rotated(Vector3.BACK, - ang * _delta)
+		_autorotate = false
+		basis = basis.rotated(basis.y, ang * _delta)
 	
 	# attitude auto
 	if _autorotate:
@@ -104,7 +110,7 @@ func smooth_rotate(new_basis:Basis) -> void:
 	_is_rotating = rot1 > 0.01
 	if not _is_rotating: return 
 	var axis: Vector3
-	if absf(rot1 - PI) <0.1 : axis = basis.z.normalized()
+	if absf(rot1 - PI) < 0.1 : axis = basis.z.normalized()
 	else: axis = basis.y.cross(new_basis.y).normalized()
 	if rot1 < 0.05:
 		if rot1 !=0: basis = basis.rotated(axis, rot1)

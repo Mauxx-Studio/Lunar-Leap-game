@@ -23,8 +23,12 @@
 [ext_resource type="Script" uid="uid://b5we4ba3ulljk" path="res://scenes/ship_sv.gd" id="16_37s47"]
 [ext_resource type="ButtonGroup" uid="uid://dgk3pacbc1r0l" path="res://attitude_control_button_group.tres" id="16_ca42v"]
 [ext_resource type="Script" uid="uid://bvbhnt4kn28rc" path="res://scripts/attitude_controller.gd" id="16_rysoc"]
+[ext_resource type="PackedScene" uid="uid://bhntk5jopuqfw" path="res://assets/crew_dragon/source/SpaceX Crew Dragon.glb" id="19_bhx41"]
 [ext_resource type="Script" uid="uid://cm43vxxsl3co1" path="res://scripts/earth_sv.gd" id="19_pl11u"]
 [ext_resource type="Script" uid="uid://bt1v0a1khtlsj" path="res://scripts/moon_sv.gd" id="20_pl11u"]
+[ext_resource type="PackedScene" uid="uid://cewka5ovva7bd" path="res://assets/ship_model/nave_1.tscn" id="20_qnb83"]
+[ext_resource type="PackedScene" uid="uid://chyl7l8thj8g5" path="res://assets/ship_model/nave1_1/nave_1_1.tscn" id="21_sww3w"]
+[ext_resource type="PackedScene" uid="uid://f2ajhomdv1qv" path="res://assets/ship_model/nave1_2/nave_1_2.tscn" id="22_suyxu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
 albedo_texture = ExtResource("6_ca42v")
@@ -45,12 +49,10 @@ radius = 1.7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37s47"]
 albedo_color = Color(0.6873999, 0.6866459, 0.81051993, 1)
-emission_enabled = true
 emission = Color(0.122678034, 0.12254336, 0.2092863, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bt5mj"]
 albedo_color = Color(0.8392157, 0.70980394, 0.70980394, 1)
-emission_enabled = true
 emission = Color(0.14770475, 0.09017948, 0.09018434, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1j6l"]
@@ -74,16 +76,6 @@ font_color = Color(1, 1, 0.7058824, 1)
 outline_size = 1
 outline_color = Color(0, 0, 0.2509804, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_ir15t"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ca42v"]
-line_spacing = 1.0
-font = SubResource("SystemFont_ir15t")
-font_size = 18
-font_color = Color(1, 1, 0.74509805, 1)
-outline_size = 1
-outline_color = Color(0, 0, 0.24313726, 1)
-
 [sub_resource type="Theme" id="Theme_ca42v"]
 
 [sub_resource type="SystemFont" id="SystemFont_ca42v"]
@@ -97,6 +89,24 @@ outline_size = 1
 outline_color = Color(0, 0, 0.25882354, 1)
 
 [sub_resource type="Theme" id="Theme_ir15t"]
+
+[sub_resource type="SystemFont" id="SystemFont_ir15t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ca42v"]
+line_spacing = 1.0
+font = SubResource("SystemFont_ir15t")
+font_size = 18
+font_color = Color(1, 1, 0.74509805, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0.24313726, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_bhx41"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qnb83"]
+font = SubResource("SystemFont_bhx41")
+font_size = 18
+font_color = Color(1, 1, 0.74509805, 1)
+outline_size = 1
 
 [node name="Game" type="Node" unique_id=535765069]
 
@@ -131,6 +141,7 @@ metadata/_custom_type_script = "uid://dwldmldpnga2m"
 [node name="ShipSystem" type="Node3D" parent="EarthSystem/Earth/Ship" unique_id=842341445]
 script = ExtResource("2_ssvqc")
 engine_thrust = 100000.0
+thrust_change_rate = 2.0
 
 [node name="VisibleWorld" type="Node" parent="." unique_id=1696306527]
 script = ExtResource("3_1kice")
@@ -141,6 +152,7 @@ script = ExtResource("3_1kice")
 transform = Transform3D(1, 0, 0, 0, 0.9170601, -0.39874908, 0, 0.39874908, 0.9170601, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Sun_inclination" unique_id=2099046766]
+shadow_enabled = true
 script = ExtResource("4_trtic")
 
 [node name="MapView" type="Node3D" parent="VisibleWorld" unique_id=114915403]
@@ -163,6 +175,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
 script = ExtResource("8_ssvqc")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/MapView/EarthV/MoonV" unique_id=1093889782]
+gi_mode = 2
 radial_segments = 36
 rings = 18
 material = SubResource("StandardMaterial3D_lc2xo")
@@ -208,6 +221,7 @@ script = ExtResource("14_264po")
 script = ExtResource("16_37s47")
 
 [node name="ShipModel" type="Node3D" parent="VisibleWorld/ShipView/ShipSV" unique_id=1936411273]
+visible = false
 script = ExtResource("16_5newe")
 
 [node name="capsule" type="CSGCylinder3D" parent="VisibleWorld/ShipView/ShipSV/ShipModel" unique_id=1234661507]
@@ -240,6 +254,17 @@ sides = 16
 cone = true
 material = SubResource("StandardMaterial3D_pl11u")
 
+[node name="SpaceX Crew Dragon" parent="VisibleWorld/ShipView/ShipSV" unique_id=1078156116 instance=ExtResource("19_bhx41")]
+visible = false
+
+[node name="Nave1" parent="VisibleWorld/ShipView/ShipSV" unique_id=622459506 instance=ExtResource("20_qnb83")]
+visible = false
+
+[node name="Nave1_1" parent="VisibleWorld/ShipView/ShipSV" unique_id=1838037004 instance=ExtResource("21_sww3w")]
+visible = false
+
+[node name="Nave1_2" parent="VisibleWorld/ShipView/ShipSV" unique_id=2089098133 instance=ExtResource("22_suyxu")]
+
 [node name="EarthSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=724636409]
 script = ExtResource("19_pl11u")
 
@@ -271,14 +296,6 @@ grow_vertical = 0
 label_settings = SubResource("LabelSettings_ir15t")
 script = ExtResource("13_kvuet")
 
-[node name="TimeInfo" type="Label" parent="VisibleWorld/Hud" unique_id=140876982]
-offset_left = 6.0
-offset_top = 2.0
-offset_right = 46.0
-offset_bottom = 25.0
-label_settings = SubResource("LabelSettings_ca42v")
-script = ExtResource("14_trtic")
-
 [node name="ThrustContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=33388708]
 anchors_preset = 3
 anchor_left = 1.0
@@ -303,17 +320,18 @@ layout_mode = 2
 theme = SubResource("Theme_ir15t")
 show_percentage = false
 
-[node name="AttitudeContainer" type="HBoxContainer" parent="VisibleWorld/Hud" unique_id=1506505027]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -39.5
-offset_top = -40.0
-offset_right = 39.5
-grow_horizontal = 2
-grow_vertical = 0
+[node name="AttitudeContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=202625042]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -103.0
+offset_bottom = 103.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
 script = ExtResource("16_rysoc")
 
 [node name="Prograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=736144250]
@@ -368,6 +386,34 @@ grow_horizontal = 0
 focus_mode = 0
 text = "Change View"
 
+[node name="TimeVBoxContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=2031695310]
+offset_right = 53.0
+offset_bottom = 61.0
+script = ExtResource("14_trtic")
+
+[node name="Time" type="Label" parent="VisibleWorld/Hud/TimeVBoxContainer" unique_id=140876982]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_ca42v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VisibleWorld/Hud/TimeVBoxContainer" unique_id=951132611]
+layout_mode = 2
+
+[node name="TSLow" type="Button" parent="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer" unique_id=640743076]
+layout_mode = 2
+text = "▼"
+
+[node name="TimeScale" type="Label" parent="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer" unique_id=430991602]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_qnb83")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TSRaise" type="Button" parent="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer" unique_id=1949955157]
+layout_mode = 2
+text = "▲"
+
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/MapView/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="orbit_changed" from="EarthSystem/Earth/Ship" to="VisibleWorld/Hud/OrbitalInfo" method="_on_ship_orbit_changed"]
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV" to="VisibleWorld/MapView" method="_on_earth_v_input_event"]
@@ -381,3 +427,5 @@ text = "Change View"
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/RadialIn" to="VisibleWorld/Hud/AttitudeContainer" method="_on_radial_in_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/RadialOut" to="VisibleWorld/Hud/AttitudeContainer" method="_on_radial_out_toggled"]
 [connection signal="button_down" from="VisibleWorld/Hud/ChangeView" to="VisibleWorld" method="_on_change_view_button_down"]
+[connection signal="button_down" from="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer/TSLow" to="VisibleWorld/Hud/TimeVBoxContainer" method="_on_ts_low_button_down"]
+[connection signal="button_down" from="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer/TSRaise" to="VisibleWorld/Hud/TimeVBoxContainer" method="_on_ts_raise_button_down"]

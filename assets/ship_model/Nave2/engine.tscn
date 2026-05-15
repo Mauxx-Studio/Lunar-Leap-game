@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cwhgoyldfaxig"]
+
+[ext_resource type="PackedScene" uid="uid://0lr6s6gspa05" path="res://assets/ship_model/Nave2/res/Engine.glb" id="1_ydsex"]
+
+[node name="Engine" unique_id=682741861 instance=ExtResource("1_ydsex")]
+
+[node name="Engine" parent="." index="0" unique_id=979716185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

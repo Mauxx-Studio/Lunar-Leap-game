@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dyxpvgscyrj3h"
-path="res://.godot/imported/Nave1.glb-9c23b4ac773f31f85eec886b72a102dc.scn"
+uid="uid://0lr6s6gspa05"
+path="res://.godot/imported/Engine.glb-ee6deb077a7612598bf1d92698ed20f4.scn"
 
 [deps]
 
-source_file="res://assets/ship_model/Nave1.glb"
-dest_files=["res://.godot/imported/Nave1.glb-9c23b4ac773f31f85eec886b72a102dc.scn"]
+source_file="res://assets/ship_model/Nave2/res/Engine.glb"
+dest_files=["res://.godot/imported/Engine.glb-ee6deb077a7612598bf1d92698ed20f4.scn"]
 
 [params]
 

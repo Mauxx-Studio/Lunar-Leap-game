@@ -15,7 +15,6 @@ var _autorotation: Callable
 var _is_rotating: bool
 
 @onready var ship: OrbitalObject3D = $".."
-@onready var ship_model: Node3D = $"../../../../VisibleWorld/ShipView/ShipSV/ShipModel"
 
 func _ready() -> void:
 	_mass = ship.mass
@@ -36,10 +35,8 @@ func _process(_delta: float) -> void:
 	# Variation of thrust
 	if Input.is_action_pressed("raise_thrust"):
 		raise_thrust(_delta)
-		if engine_on: ship_model.set_flame(thrust)
 	if Input.is_action_pressed("low_thrust"):
 		low_thrust(_delta)
-		if engine_on: ship_model.set_flame(thrust)
 	
 	# attitude manual control
 	var ang:float = 1
@@ -74,8 +71,6 @@ func _input(event: InputEvent) -> void:
 	# Engine turn on or off with the same key
 	if event.is_action_pressed("engine_on_off"):
 		engine_on = not engine_on
-		if engine_on: ship_model.set_flame(thrust)
-		else: ship_model.set_flame(0.0)
 
 # relative thrust, varies between 0 and 100 %
 func raise_thrust(delta:float) -> void:

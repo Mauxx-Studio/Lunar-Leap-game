@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d75x02xqn3m7"
-path.s3tc="res://.godot/imported/SpaceX Crew Dragon_0.png-4404100abca117770752bb7467d9a8cf.s3tc.ctex"
+uid="uid://53s7vy0n6pw3"
+path.s3tc="res://.godot/imported/ServiceModule_Godot Enginelogo.png-af9b5a84207059eb5a0481f839ae29d0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "26e1bcc4278ca46cfc92231247fb0fc0"
+"md5": "0937068ade16aec1a42a018fc9d66b92"
 }
 
 [deps]
 
-source_file="res://assets/crew_dragon/source/SpaceX Crew Dragon_0.png"
-dest_files=["res://.godot/imported/SpaceX Crew Dragon_0.png-4404100abca117770752bb7467d9a8cf.s3tc.ctex"]
+source_file="res://assets/ship_model/Nave2/res/ServiceModule_Godot Enginelogo.png"
+dest_files=["res://.godot/imported/ServiceModule_Godot Enginelogo.png-af9b5a84207059eb5a0481f839ae29d0.s3tc.ctex"]
 
 [params]
 

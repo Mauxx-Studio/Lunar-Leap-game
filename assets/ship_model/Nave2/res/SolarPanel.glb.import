@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bhntk5jopuqfw"
-path="res://.godot/imported/SpaceX Crew Dragon.glb-b9a0d215becbb82b325bb421cd862fb9.scn"
+uid="uid://cpclnfq8wys46"
+path="res://.godot/imported/SolarPanel.glb-d5a3e94cea3b6c88aec66ba72f3b93b1.scn"
 
 [deps]
 
-source_file="res://assets/crew_dragon/source/SpaceX Crew Dragon.glb"
-dest_files=["res://.godot/imported/SpaceX Crew Dragon.glb-b9a0d215becbb82b325bb421cd862fb9.scn"]
+source_file="res://assets/ship_model/Nave2/res/SolarPanel.glb"
+dest_files=["res://.godot/imported/SolarPanel.glb-d5a3e94cea3b6c88aec66ba72f3b93b1.scn"]
 
 [params]
 

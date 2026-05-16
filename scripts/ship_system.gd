@@ -29,7 +29,8 @@ func _process(_delta: float) -> void:
 		var a = (ship.get_force() + basis * _direction * thrust * engine_thrust / 100) / _mass
 		var v = ship.get_velocity() + a * _delta * _ts
 		var p = ship.position + v * _delta * _ts
-		if ship.get_velocity().length() > 10 : ship.calcule_orbit(p, v)
+		#if ship.get_velocity().length() > 10 : 
+		ship.calcule_orbit(p, v) #~Verificar esto
 		if not engine_on or thrust == 0: inertial = true
 	
 	# Variation of thrust

@@ -3,6 +3,7 @@ extends Node3D
 const SOLAR_PANEL_MODULE = preload("uid://gw2q58di15wr")
 @onready var panel_holder_hinge: Node3D = $solar_panel_hole1/solar_panel_holder/panel_holder_hinge
 @onready var solar_panel_holder: MeshInstance3D = $solar_panel_hole1/solar_panel_holder
+@onready var sun_directional_light_3d: DirectionalLight3D = $"../../../../../../../Sun_inclination/SunDirectionalLight3D"
 
 
 var panels: Array[MeshInstance3D]
@@ -14,9 +15,29 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("deploy_panels"):
-		deploy()
+		if not deployed: deploy()
 	if event.is_action_pressed("retract_panels"):
-		retract()
+		if deployed: retract()
+
+func _process(_delta: float) -> void:
+	if deployed: rotate_to_sun()
+	else: rotate_to_0()
+
+
+func rotate_to_sun():
+	var sun_dir = global_basis.inverse() * (sun_directional_light_3d.global_basis * Vector3.FORWARD)
+	sun_dir.x = 0
+	var panel_dir = solar_panel_holder.basis * Vector3.FORWARD
+	var rot = sun_dir.angle_to(panel_dir)
+	if rot < 0.02: return
+	if sun_dir.cross(panel_dir).x > 0: rot = -rot
+	rot += solar_panel_holder.rotation.x
+	var tween = create_tween()
+	tween.tween_property(solar_panel_holder,"rotation:x", rot, 2.0)
+
+func rotate_to_0():
+	var tween = create_tween()
+	tween.tween_property(solar_panel_holder,"rotation:x", 0.0, 2.0)
 
 func add_panels() -> void:
 	var index:int = panels.size()
@@ -29,6 +50,7 @@ func add_panels() -> void:
 	return
 
 func retract() -> void:
+	deployed = false
 	var tween = create_tween()
 	tween.set_parallel(true)
 	for i in panels.size():
@@ -41,7 +63,6 @@ func retract() -> void:
 	await tween2.finished
 	var tween3 = create_tween()
 	tween3.tween_property(solar_panel_holder,"position:x", -0.35, 2.0)
-	deployed = false
 	return
 
 func deploy() -> void:

@@ -16,14 +16,14 @@ func _process(_delta: float) -> void:
 	shrink_visible(moon, moon_sv)
 
 
-func shrink_visible(object:OrbitalObject3D, visible:Node3D):
-	if not visible.has_method("set_radius"): return
+func shrink_visible(object:OrbitalObject3D, visible_node:Node3D):
+	if not visible_node.has_method("set_radius"): return
 	var rel_pos: Vector3
 	if ship.attractor == object:
 		rel_pos = - ship.position
 	else:
 		rel_pos = object.global_position - ship.global_position
 	var h_rel = REMOTE / (rel_pos.length() - object.radius)
-	visible.set_radius(h_rel* object.radius)
+	visible_node.set_radius(h_rel* object.radius)
 	var pos = rel_pos * h_rel
-	visible.position = pos
+	visible_node.position = pos

@@ -127,7 +127,8 @@ script = ExtResource("3_1kice")
 [node name="Sun_inclination" type="Node3D" parent="VisibleWorld" unique_id=1029800242]
 transform = Transform3D(1, 0, 0, 0, 0.9170601, -0.39874908, 0, 0.39874908, 0.9170601, 0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Sun_inclination" unique_id=2099046766]
+[node name="SunDirectionalLight3D" type="DirectionalLight3D" parent="VisibleWorld/Sun_inclination" unique_id=2099046766]
+unique_name_in_owner = true
 shadow_enabled = true
 script = ExtResource("4_trtic")
 

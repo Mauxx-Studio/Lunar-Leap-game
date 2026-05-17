@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("raise_time_scale"):
-		OrbitalManager.set_time_scale(OrbitalManager.get_time_scale() * 2)
+		OrbitalManager.set_time_scale(OrbitalManager.get_time_scale() * 2, not GameManager.get_is_inertial())
 	if event.is_action_pressed("low_time_scale"):
 		var t_s = OrbitalManager.get_time_scale() / 2
 		t_s = max(1.0, t_s)

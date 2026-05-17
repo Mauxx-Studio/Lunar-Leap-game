@@ -12,6 +12,13 @@ enum direction{
 	ANTINORMAL
 }
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("raise_time_scale"):
+		if OrbitalManager.get_time_scale() > 16:
+			var buttons = get_children()
+			for i in buttons.size():
+				buttons[i].button_pressed = false
+
 func rotate_prograde(vel: Vector3, pos: Vector3) -> Basis:
 	var j = vel.normalized()
 	var k = - j.cross(pos).normalized()

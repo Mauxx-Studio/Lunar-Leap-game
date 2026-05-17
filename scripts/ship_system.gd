@@ -20,18 +20,19 @@ func _ready() -> void:
 	_mass = ship.mass
 
 func _process(_delta: float) -> void:
-	if engine_on and thrust > 0: inertial = false
+	if engine_on and thrust > 0:
+		if inertial: GameManager.set_inertial(false)
+		inertial = false
 	if not inertial:
 		var _ts = OrbitalManager.get_time_scale()
-		if _ts > 8:
-			OrbitalManager.set_time_scale(8)
-			_ts = OrbitalManager.get_time_scale()
 		var a = (ship.get_force() + basis * _direction * thrust * engine_thrust / 100) / _mass
 		var v = ship.get_velocity() + a * _delta * _ts
 		var p = ship.position + v * _delta * _ts
 		#if ship.get_velocity().length() > 10 : 
 		ship.calcule_orbit(p, v) #~Verificar esto
-		if not engine_on or thrust == 0: inertial = true
+		if not engine_on or thrust == 0:
+			inertial = true
+			GameManager.set_inertial(true)
 	
 	# Variation of thrust
 	if Input.is_action_pressed("raise_thrust"):

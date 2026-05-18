@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cfqlhd20gc3l4" path="res://assets/ship_model/Nave2/engine_loc.gd" id="1_icua0"]
 [ext_resource type="PackedScene" uid="uid://cwhgoyldfaxig" path="res://assets/ship_model/Nave2/engine.tscn" id="1_kl6ox"]
+[ext_resource type="Script" uid="uid://cm10t6d1fejv7" path="res://assets/ship_model/Nave2/service_module.gd" id="1_oglr3"]
 [ext_resource type="Texture2D" uid="uid://53s7vy0n6pw3" path="res://assets/ship_model/Nave2/res/ServiceModule_Godot Enginelogo.png" id="1_pkhne"]
 [ext_resource type="Texture2D" uid="uid://cqie2pdrj05as" path="res://assets/ship_model/Nave2/res/ServiceModule_mauxxst.png" id="2_kl6ox"]
 [ext_resource type="PackedScene" uid="uid://dmdjg2bbbh6lp" path="res://assets/ship_model/Nave2/solar_panel.tscn" id="4_o3af8"]
@@ -225,7 +226,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_tyvco")
 
-[node name="ServiceModule" type="Node3D" unique_id=1324263859]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_icua0"]
+height = 3.0
+radius = 1.8
+
+[node name="ServiceModule" type="RigidBody3D" unique_id=1968186601]
+mass = 6000.0
+script = ExtResource("1_oglr3")
 
 [node name="tank" type="MeshInstance3D" parent="." unique_id=499068180]
 mesh = SubResource("ArrayMesh_2xnl8")
@@ -237,7 +244,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.99999994)
 script = ExtResource("1_icua0")
 
-[node name="Engine" parent="tank/Engine_loc_1_3" unique_id=682741861 instance=ExtResource("1_kl6ox")]
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_1_3" unique_id=1880298855]
+node_a = NodePath("../../..")
+node_b = NodePath("Engine")
+
+[node name="Engine" parent="tank/Engine_loc_1_3/Generic6DOFJoint3D" unique_id=682741861 instance=ExtResource("1_kl6ox")]
 
 [node name="Engine_loc_2_3" type="Node3D" parent="tank" unique_id=2125867296]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8660255, -3, 0.5)
@@ -245,11 +256,19 @@ script = ExtResource("1_icua0")
 
 [node name="Engine" parent="tank/Engine_loc_2_3" unique_id=274866324 instance=ExtResource("1_kl6ox")]
 
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_2_3" unique_id=1532933973]
+node_a = NodePath("../../..")
+node_b = NodePath("../Engine")
+
 [node name="Engine_loc_3_3" type="Node3D" parent="tank" unique_id=393809239]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8660252, -3, 0.5)
 script = ExtResource("1_icua0")
 
 [node name="Engine" parent="tank/Engine_loc_3_3" unique_id=1946063970 instance=ExtResource("1_kl6ox")]
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_3_3" unique_id=1272933730]
+node_a = NodePath("../../..")
+node_b = NodePath("../Engine")
 
 [node name="logo_godot2" type="MeshInstance3D" parent="tank" unique_id=68259416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8891363, 1.8249391)
@@ -276,3 +295,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8600004, -1.4999999, 0)
 transform = Transform3D(-1, -7.642742e-15, -8.742278e-08, 0, -1, 8.742278e-08, -8.742278e-08, 8.742278e-08, 1, -1.8600004, -1.4999999, 0)
 
 [node name="SolarPanel" parent="tank/Solar_panel_place_2" unique_id=35534921 instance=ExtResource("4_o3af8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=31709584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+shape = SubResource("CylinderShape3D_icua0")

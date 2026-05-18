@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://ccf30d523h65v"]
 
 [ext_resource type="PackedScene" uid="uid://dcp0kn8q8v4e" path="res://assets/ship_model/Nave2/service_module.tscn" id="1_ax0ah"]
+[ext_resource type="Script" uid="uid://bgidx8xybslk4" path="res://assets/ship_model/Nave2/capsule.gd" id="1_dxas5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_644da"]
 resource_name = "color1capsula"
@@ -217,7 +218,11 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xfew4")
 
-[node name="Capsule" type="Node3D" unique_id=1256666761]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ax0ah"]
+radius = 1.8
+
+[node name="Capsule" type="RigidBody3D" unique_id=1279875725]
+script = ExtResource("1_dxas5")
 
 [node name="capsule" type="MeshInstance3D" parent="." unique_id=749717873]
 mesh = SubResource("ArrayMesh_3evcq")
@@ -242,3 +247,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7024392, 0)
 mesh = SubResource("ArrayMesh_t7wna")
 
 [node name="ServiceModule" parent="." unique_id=1324263859 instance=ExtResource("1_ax0ah")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2113032538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_ax0ah")
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="." unique_id=1729765283]
+node_a = NodePath("..")
+node_b = NodePath("../ServiceModule")

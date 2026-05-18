@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://c6bhmfes7u88o" path="res://scripts/time_info.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://deoc1ljbhqoab" path="res://scripts/ship_view.gd" id="15_e1j6l"]
 [ext_resource type="Script" uid="uid://c446l7v81mnlx" path="res://scripts/thrust_info.gd" id="15_ir15t"]
-[ext_resource type="Script" uid="uid://b5we4ba3ulljk" path="res://scenes/ship_sv.gd" id="16_37s47"]
 [ext_resource type="ButtonGroup" uid="uid://dgk3pacbc1r0l" path="res://attitude_control_button_group.tres" id="16_ca42v"]
 [ext_resource type="Script" uid="uid://bvbhnt4kn28rc" path="res://scripts/attitude_controller.gd" id="16_rysoc"]
 [ext_resource type="PackedScene" uid="uid://ccf30d523h65v" path="res://assets/ship_model/Nave2/capsule.tscn" id="18_pl11u"]
@@ -188,17 +187,7 @@ zoom_speed = 0.08
 [node name="ShipView" type="Node3D" parent="VisibleWorld" unique_id=548966789]
 script = ExtResource("15_e1j6l")
 
-[node name="CameraPivot" type="Node3D" parent="VisibleWorld/ShipView" unique_id=1239897607]
-
-[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/ShipView/CameraPivot" unique_id=369832673]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
-script = ExtResource("14_264po")
-
-[node name="ShipSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=910372070]
-script = ExtResource("16_37s47")
-
-[node name="Capsule" parent="VisibleWorld/ShipView/ShipSV" unique_id=1553533486 instance=ExtResource("18_pl11u")]
+[node name="Capsule" parent="VisibleWorld/ShipView" unique_id=1553533486 instance=ExtResource("18_pl11u")]
 
 [node name="EarthSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=724636409]
 script = ExtResource("19_pl11u")
@@ -216,6 +205,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
 radial_segments = 64
 rings = 32
 material = SubResource("StandardMaterial3D_lc2xo")
+
+[node name="CameraPivot" type="Node3D" parent="VisibleWorld/ShipView" unique_id=1239897607]
+
+[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/ShipView/CameraPivot" unique_id=369832673]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+fov = 40.0
+script = ExtResource("14_264po")
 
 [node name="Hud" type="CanvasLayer" parent="VisibleWorld" unique_id=1657498710]
 
@@ -253,6 +250,7 @@ script = ExtResource("15_ir15t")
 [node name="ProgressBar" type="ProgressBar" parent="VisibleWorld/Hud/ThrustContainer" unique_id=869070228]
 layout_mode = 2
 theme = SubResource("Theme_ir15t")
+max_value = 1.0
 show_percentage = false
 
 [node name="AttitudeContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=202625042]

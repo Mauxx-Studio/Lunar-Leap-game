@@ -43,7 +43,7 @@ func shrink_visible(object:OrbitalObject3D, visible_node:Node3D, remote:float) -
 	var h_rel = remote / (rel_pos.length() - object.radius)
 	visible_node.set_radius(h_rel* object.radius)
 	var pos = rel_pos * h_rel
-	visible_node.position = pos + capsule.position
+	visible_node.position = pos
   
 	return pos.length()
 

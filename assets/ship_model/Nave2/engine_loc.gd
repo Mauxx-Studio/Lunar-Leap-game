@@ -4,7 +4,8 @@ extends Node3D
 
 var aux_axis:Vector3
 
-@onready var engine: Node3D = $Engine
+@onready var engine: RigidBody3D = $Engine
+
 
 func _ready() -> void:
 	aux_axis = position

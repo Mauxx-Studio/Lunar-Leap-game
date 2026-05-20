@@ -230,9 +230,10 @@ shadow_mesh = SubResource("ArrayMesh_tyvco")
 height = 3.0
 radius = 1.8
 
-[node name="ServiceModule" type="RigidBody3D" unique_id=1968186601]
+[node name="ServiceModule" type="RigidBody3D" unique_id=1845667713]
 mass = 6000.0
 script = ExtResource("1_oglr3")
+metadata/_custom_type_script = "uid://7w2x2f26yyng"
 
 [node name="tank" type="MeshInstance3D" parent="." unique_id=499068180]
 mesh = SubResource("ArrayMesh_2xnl8")
@@ -244,11 +245,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.99999994)
 script = ExtResource("1_icua0")
 
+[node name="Engine" parent="tank/Engine_loc_1_3" unique_id=682741861 instance=ExtResource("1_kl6ox")]
+engine_on = true
+_thrust = 0.03
+
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_1_3" unique_id=1880298855]
 node_a = NodePath("../../..")
-node_b = NodePath("Engine")
-
-[node name="Engine" parent="tank/Engine_loc_1_3/Generic6DOFJoint3D" unique_id=682741861 instance=ExtResource("1_kl6ox")]
+node_b = NodePath("../Engine")
 
 [node name="Engine_loc_2_3" type="Node3D" parent="tank" unique_id=2125867296]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8660255, -3, 0.5)

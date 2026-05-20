@@ -8,7 +8,6 @@ var _autorotation: Callable
 var _is_rotating: bool
 
 @onready var ship: OrbitalObject3D = $".."
-@onready var capsule: RigidBody3D = $"../../../../VisibleWorld/ShipView/ShipSV/Capsule"
 
 func _process(_delta: float) -> void:
 	

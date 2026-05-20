@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends ShipComponent
 
 func find_engines() -> Array:
 	var engines: Array

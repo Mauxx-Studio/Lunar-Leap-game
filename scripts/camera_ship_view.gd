@@ -7,10 +7,6 @@ var is_rotating:bool = false
 var last_mouse_pos: Vector2 = Vector2.ZERO
 
 @onready var camera_pivot: Node3D = $".."
-@onready var capsule: RigidBody3D = $"../../Capsule"
-
-func _process(_delta: float) -> void:
-	camera_pivot.position = capsule.position
 
 func _input(event: InputEvent) -> void:
 	if not GameManager.current_cam == self: return

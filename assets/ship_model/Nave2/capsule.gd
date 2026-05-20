@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends ShipComponent
 
 @export var thrust_change_rate: float = 2.0
 
@@ -14,10 +14,12 @@ var _last_velocity: Vector3
 
 func _ready() -> void:
 	engines = find_engines()
+	axis_lock_linear_x = true
+	axis_lock_linear_y = true
+	axis_lock_linear_z = true
 
 func _physics_process(_delta: float) -> void:
 	if not inertial:
-		if not ship.position: return
 		var pos = ship.position + position - _last_position
 		var vel = ship.get_velocity() + linear_velocity - _last_velocity
 		ship.calcule_orbit(pos, vel)
@@ -31,6 +33,8 @@ func _physics_process(_delta: float) -> void:
 		if engine_on and thrust > 0:
 			position = Vector3.ZERO
 			linear_velocity = Vector3.ZERO
+			
+			print("hecho  ")
 			_last_position = Vector3.ZERO
 			_last_velocity = Vector3.ZERO
 			GameManager.set_inertial(false)

@@ -3,7 +3,7 @@ extends Node3D
 const SOLAR_PANEL_MODULE = preload("uid://gw2q58di15wr")
 @onready var panel_holder_hinge: Node3D = $solar_panel_hole1/solar_panel_holder/panel_holder_hinge
 @onready var solar_panel_holder: MeshInstance3D = $solar_panel_hole1/solar_panel_holder
-@onready var sun_directional_light_3d: DirectionalLight3D = $"../../../../../../Sun_inclination/SunDirectionalLight3D"
+@onready var sun_directional_light_3d: DirectionalLight3D = $"../../../../../Sun_inclination/SunDirectionalLight3D"
 
 var panels: Array[MeshInstance3D]
 var deployed:bool = true

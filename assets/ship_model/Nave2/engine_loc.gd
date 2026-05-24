@@ -1,4 +1,4 @@
-extends Node3D
+extends Generic6DOFJoint3D
 
 @export var vectorial_angle:float = 15
 

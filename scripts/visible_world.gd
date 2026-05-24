@@ -3,7 +3,8 @@ extends Node
 @onready var camera_map_view: Camera3D = %CameraMapView
 @onready var camera_ship_view: Camera3D = %CameraShipView
 @onready var map_view: Node3D = $MapView
-@onready var ship_view: Node3D = $ShipView
+@onready var ship_view: Node3D = $Capsule/ShipView
+
 
 func _ready() -> void:
 	map_view.show()

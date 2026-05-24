@@ -5,11 +5,12 @@ extends RigidBody3D
 @export var component_name : String = "Component"
 @export var is_base_component : bool = false        # ← Marca la nave/capsula como base
 
-var parent_component : ShipComponent = null
+var parent_component: ShipComponent = null
+var children_components: Array[ShipComponent] = []
 
 func _ready() -> void:
+	await get_tree().process_frame
 	parent_component = _find_parent_component()
-	if parent_component: print(parent_component)
 	_component_ready()
 
 # Busca el primer ShipComponent hacia arriba en la jerarquía
@@ -22,6 +23,7 @@ func _find_parent_component() -> ShipComponent:
 	
 	while current != null and count < 30:
 		if current is ShipComponent:
+			current.children_components.append(self)
 			return current
 		current = current.get_parent()
 		count += 1
@@ -44,6 +46,4 @@ func get_ship() -> ShipComponent:     # Devuelve la nave principal (el component
 
 func is_connected_to_ship() -> bool:    # Devuelve true si este componente está conectado a la nave
 	return get_ship() != null
-	
-	
 	

@@ -184,36 +184,6 @@ fov = 40.0
 script = ExtResource("13_264po")
 zoom_speed = 0.08
 
-[node name="ShipView" type="Node3D" parent="VisibleWorld" unique_id=548966789]
-script = ExtResource("15_e1j6l")
-
-[node name="Capsule" parent="VisibleWorld/ShipView" unique_id=1553533486 instance=ExtResource("18_pl11u")]
-
-[node name="EarthSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=724636409]
-script = ExtResource("19_pl11u")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/ShipView/EarthSV" unique_id=342504504]
-radial_segments = 64
-rings = 32
-material = SubResource("StandardMaterial3D_iotsf")
-
-[node name="MoonSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=424354658]
-script = ExtResource("20_pl11u")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/ShipView/MoonSV" unique_id=1882266244]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
-radial_segments = 64
-rings = 32
-material = SubResource("StandardMaterial3D_lc2xo")
-
-[node name="CameraPivot" type="Node3D" parent="VisibleWorld/ShipView" unique_id=1239897607]
-
-[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/ShipView/CameraPivot" unique_id=369832673]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
-fov = 40.0
-script = ExtResource("14_264po")
-
 [node name="Hud" type="CanvasLayer" parent="VisibleWorld" unique_id=1657498710]
 
 [node name="OrbitalInfo" type="Label" parent="VisibleWorld/Hud" unique_id=256680341]
@@ -346,6 +316,36 @@ vertical_alignment = 1
 [node name="TSRaise" type="Button" parent="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer" unique_id=1949955157]
 layout_mode = 2
 text = "▲"
+
+[node name="Capsule" parent="VisibleWorld" unique_id=1553533486 instance=ExtResource("18_pl11u")]
+
+[node name="ShipView" type="Node3D" parent="VisibleWorld/Capsule" unique_id=548966789]
+script = ExtResource("15_e1j6l")
+
+[node name="EarthSV" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=724636409]
+script = ExtResource("19_pl11u")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/Capsule/ShipView/EarthSV" unique_id=342504504]
+radial_segments = 64
+rings = 32
+material = SubResource("StandardMaterial3D_iotsf")
+
+[node name="MoonSV" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=424354658]
+script = ExtResource("20_pl11u")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/Capsule/ShipView/MoonSV" unique_id=1882266244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
+radial_segments = 64
+rings = 32
+material = SubResource("StandardMaterial3D_lc2xo")
+
+[node name="CameraPivot" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=1239897607]
+
+[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/Capsule/ShipView/CameraPivot" unique_id=369832673]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+fov = 40.0
+script = ExtResource("14_264po")
 
 [connection signal="has_new_attractor" from="EarthSystem/Earth/Ship" to="VisibleWorld/MapView/EarthV/ShipV" method="_on_ship_has_new_attractor"]
 [connection signal="orbit_changed" from="EarthSystem/Earth/Ship" to="VisibleWorld/Hud/OrbitalInfo" method="_on_ship_orbit_changed"]

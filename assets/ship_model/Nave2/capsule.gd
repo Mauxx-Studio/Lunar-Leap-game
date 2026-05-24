@@ -10,13 +10,15 @@ var thrust:float
 var _last_position: Vector3
 var _last_velocity: Vector3
 
-@onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
+@onready var ship: OrbitalObject3D = $"../../EarthSystem/Earth/Ship"
+@onready var ship_view: Node3D = $ShipView
+
 
 func _ready() -> void:
 	engines = find_engines()
-	axis_lock_linear_x = true
-	axis_lock_linear_y = true
-	axis_lock_linear_z = true
+	#axis_lock_linear_x = true
+	#axis_lock_linear_y = true
+	#axis_lock_linear_z = true
 
 func _physics_process(_delta: float) -> void:
 	if not inertial:
@@ -49,7 +51,8 @@ func _physics_process(_delta: float) -> void:
 		low_thrust(_delta)
 		set_engines_thrust(thrust)
 
-
+func _process(_delta: float) -> void:
+	ship_view.basis = basis.inverse()
 
 func find_engines() -> Array:
 	var engs: Array

@@ -7,11 +7,12 @@ var relations:Dictionary
 
 @onready var camera_ship_view: Camera3D = %CameraShipView
 
-@onready var ship: OrbitalObject3D = $"../../EarthSystem/Earth/Ship"
-@onready var earth: OrbitalObject3D = $"../../EarthSystem/Earth"
-@onready var moon: OrbitalObject3D = $"../../EarthSystem/Earth/Moon"
+@onready var earth: OrbitalObject3D = $"../../../EarthSystem/Earth"
+@onready var moon: OrbitalObject3D = $"../../../EarthSystem/Earth/Moon"
+@onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
 
-@onready var capsule: RigidBody3D = $Capsule
+@onready var capsule: RigidBody3D = $".."
+
 @onready var earth_sv: Node3D = $EarthSV
 @onready var moon_sv: Node3D = $MoonSV
 

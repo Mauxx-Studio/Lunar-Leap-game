@@ -241,37 +241,29 @@ mesh = SubResource("ArrayMesh_2xnl8")
 [node name="bottom_center_tank" type="Node3D" parent="tank" unique_id=861441576]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
 
-[node name="Engine_loc_1_3" type="Node3D" parent="tank" unique_id=266383597]
+[node name="Engine_loc_1_3" type="Generic6DOFJoint3D" parent="tank" unique_id=2097284352]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.99999994)
+node_a = NodePath("../..")
+node_b = NodePath("Engine")
 script = ExtResource("1_icua0")
 
 [node name="Engine" parent="tank/Engine_loc_1_3" unique_id=682741861 instance=ExtResource("1_kl6ox")]
-engine_on = true
-_thrust = 0.03
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_1_3" unique_id=1880298855]
-node_a = NodePath("../../..")
-node_b = NodePath("../Engine")
-
-[node name="Engine_loc_2_3" type="Node3D" parent="tank" unique_id=2125867296]
+[node name="Engine_loc_2_3" type="Generic6DOFJoint3D" parent="tank" unique_id=407964421]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8660255, -3, 0.5)
+node_a = NodePath("../..")
+node_b = NodePath("Engine")
 script = ExtResource("1_icua0")
 
 [node name="Engine" parent="tank/Engine_loc_2_3" unique_id=274866324 instance=ExtResource("1_kl6ox")]
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_2_3" unique_id=1532933973]
-node_a = NodePath("../../..")
-node_b = NodePath("../Engine")
-
-[node name="Engine_loc_3_3" type="Node3D" parent="tank" unique_id=393809239]
+[node name="Engine_loc_3_3" type="Generic6DOFJoint3D" parent="tank" unique_id=214921252]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8660252, -3, 0.5)
+node_a = NodePath("../..")
+node_b = NodePath("Engine")
 script = ExtResource("1_icua0")
 
 [node name="Engine" parent="tank/Engine_loc_3_3" unique_id=1946063970 instance=ExtResource("1_kl6ox")]
-
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="tank/Engine_loc_3_3" unique_id=1272933730]
-node_a = NodePath("../../..")
-node_b = NodePath("../Engine")
 
 [node name="logo_godot2" type="MeshInstance3D" parent="tank" unique_id=68259416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8891363, 1.8249391)

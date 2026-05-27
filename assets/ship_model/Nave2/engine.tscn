@@ -47,11 +47,11 @@ shadow_mesh = SubResource("ArrayMesh_7oov4")
 height = 0.8
 radius = 0.35
 
-[node name="Engine" type="RigidBody3D" unique_id=1832125788]
+[node name="Engine" type="RigidBody3D" unique_id=30066409]
 mass = 120.0
 script = ExtResource("1_ydsex")
 engine_thrust = 50000.0
-metadata/_custom_type_script = "uid://7w2x2f26yyng"
+metadata/_custom_type_script = "uid://431liqtwpsf"
 
 [node name="Engine" type="MeshInstance3D" parent="." unique_id=979716185]
 mesh = SubResource("ArrayMesh_siujo")

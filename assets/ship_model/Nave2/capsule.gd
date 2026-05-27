@@ -1,66 +1,55 @@
-extends ShipComponent
+extends SpaceShip
 
 @export var thrust_change_rate: float = 2.0
 
 var inertial:bool
-var engines: Array
 var engine_on: bool
 var thrust:float
 
-var _last_position: Vector3
-var _last_velocity: Vector3
+var _autorotate: bool
+var _autorotation: Callable
+var _autodirection: Callable
 
 @onready var ship: OrbitalObject3D = $"../../EarthSystem/Earth/Ship"
 @onready var ship_view: Node3D = $ShipView
-
+@onready var reaction_wheel: Node = $ReactionWheel
 
 func _ready() -> void:
-	engines = find_engines()
-	#axis_lock_linear_x = true
-	#axis_lock_linear_y = true
-	#axis_lock_linear_z = true
+	find_components(self,self)
+	find_engines()
+	update_ship_mass()
+	ship.mass = get_ship_mass()
 
 func _physics_process(_delta: float) -> void:
 	if not inertial:
-		var pos = ship.position + position - _last_position
-		var vel = ship.get_velocity() + linear_velocity - _last_velocity
-		ship.calcule_orbit(pos, vel)
-		_last_position = position
-		_last_velocity = linear_velocity
-		var _ts = OrbitalManager.get_time_scale()
+		OrbitalManager.set_time_scale(1)
 		if not engine_on or thrust == 0:
 			inertial = true
 			GameManager.set_inertial(true)
+		var a = (get_total_thrust() + ship.get_force()) / ship_mass
+		var v = ship.get_velocity() + a * _delta
+		var p = ship.position + v * _delta
+		ship.calcule_orbit(p,v)
 	if inertial:
 		if engine_on and thrust > 0:
-			position = Vector3.ZERO
-			linear_velocity = Vector3.ZERO
-			
-			print("hecho  ")
-			_last_position = Vector3.ZERO
-			_last_velocity = Vector3.ZERO
 			GameManager.set_inertial(false)
 			inertial = false
+			linear_velocity = Vector3.ZERO
+			position= Vector3.ZERO
+	if _autorotate:
+		var dir = _autodirection.call(ship.get_velocity(), ship.position)
+		reaction_wheel.rotate_ship_to(dir)
+
+func _process(_delta: float) -> void:
+	ship_view.basis = basis.inverse()
 	
-	
-	# Variation of thrust
+		# Variation of thrust
 	if Input.is_action_pressed("raise_thrust"):
 		raise_thrust(_delta)
 		set_engines_thrust(thrust)
 	if Input.is_action_pressed("low_thrust"):
 		low_thrust(_delta)
 		set_engines_thrust(thrust)
-
-func _process(_delta: float) -> void:
-	ship_view.basis = basis.inverse()
-
-func find_engines() -> Array:
-	var engs: Array
-	var children = find_children("*")
-	for i in children.size():
-		if children[i].has_method("set_engine_on"):
-			engs.append(children[i])
-	return engs
 
 func set_engines_thrust(t:float) -> void:
 	if engines.size() == 0: return
@@ -90,3 +79,18 @@ func low_thrust(delta:float) -> void:
 	thrust *= 1 - change
 	if thrust < change * .1: thrust = 0.0
 	thrust = max(0.0, thrust)
+
+func set_autorotate(on:bool)-> void:
+	_autorotate = on
+
+func get_autorotate() -> bool:
+	return _autorotate
+
+
+func _on_attitude_container_attitude_contorller(auto: bool, autorotation: Callable) -> void:
+	_autorotate = auto
+	_autorotation = autorotation
+
+func _on_attitude_container_direction_controller(auto: bool, auto_direction: Callable) -> void:
+	_autorotate = auto
+	_autodirection = auto_direction

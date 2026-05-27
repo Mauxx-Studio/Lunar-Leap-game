@@ -11,8 +11,6 @@ var relations:Dictionary
 @onready var moon: OrbitalObject3D = $"../../../EarthSystem/Earth/Moon"
 @onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
 
-@onready var capsule: RigidBody3D = $".."
-
 @onready var earth_sv: Node3D = $EarthSV
 @onready var moon_sv: Node3D = $MoonSV
 

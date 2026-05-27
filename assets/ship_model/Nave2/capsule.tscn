@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dcp0kn8q8v4e" path="res://assets/ship_model/Nave2/service_module.tscn" id="1_ax0ah"]
 [ext_resource type="Script" uid="uid://bgidx8xybslk4" path="res://assets/ship_model/Nave2/capsule.gd" id="1_dxas5"]
+[ext_resource type="Script" uid="uid://dk6tyui8joqji" path="res://assets/ship_model/Nave2/reaction_wheel.gd" id="3_dpu0s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_644da"]
 resource_name = "color1capsula"
@@ -221,10 +222,11 @@ shadow_mesh = SubResource("ArrayMesh_xfew4")
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ax0ah"]
 radius = 1.8
 
-[node name="Capsule" type="RigidBody3D" unique_id=1272649297]
+[node name="Capsule" type="RigidBody3D" unique_id=1865438939]
+mass = 10000.0
 script = ExtResource("1_dxas5")
 is_base_component = true
-metadata/_custom_type_script = "uid://7w2x2f26yyng"
+metadata/_custom_type_script = "uid://c3mt5yt5fnmia"
 
 [node name="capsule" type="MeshInstance3D" parent="." unique_id=749717873]
 mesh = SubResource("ArrayMesh_3evcq")
@@ -236,7 +238,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0442326, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8626451e-08, 0, 0)
 mesh = SubResource("ArrayMesh_acfhr")
 
-[node name="windoiw1" type="MeshInstance3D" parent="capsule" unique_id=526625647]
+[node name="window1" type="MeshInstance3D" parent="capsule" unique_id=526625647]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7024392, 0)
 mesh = SubResource("ArrayMesh_dejlm")
 
@@ -257,3 +259,6 @@ shape = SubResource("CylinderShape3D_ax0ah")
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="." unique_id=1729765283]
 node_a = NodePath("..")
 node_b = NodePath("../ServiceModule")
+
+[node name="ReactionWheel" type="Node" parent="." unique_id=740889600]
+script = ExtResource("3_dpu0s")

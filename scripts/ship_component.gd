@@ -5,12 +5,13 @@ extends RigidBody3D
 @export var component_name : String = "Component"
 @export var is_base_component : bool = false        # ← Marca la nave/capsula como base
 
-var parent_component: ShipComponent = null
+var spaceship: SpaceShip
+var parent_component: ShipComponent
 var children_components: Array[ShipComponent] = []
 
 func _ready() -> void:
 	await get_tree().process_frame
-	parent_component = _find_parent_component()
+	gravity_scale = 0.0
 	_component_ready()
 
 # Busca el primer ShipComponent hacia arriba en la jerarquía

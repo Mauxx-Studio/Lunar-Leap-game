@@ -10,6 +10,9 @@ func _process(_delta: float) -> void:
 	var vel = ship.get_velocity().length()
 	var str0:String = "Speed = " + magnitude_to_string(vel, "m/s")  
 	
+	var alt = ship.position.length() - ship.attractor.radius
+	var str01:String = "Altitude = " + magnitude_to_string(alt, "m") 
+	
 	var peri:float = ship.get_periapsis().length()
 	if ship.attractor: peri-= ship.attractor.radius
 	var str1: String = "Periapsis = " + magnitude_to_string(peri, "m")
@@ -18,9 +21,9 @@ func _process(_delta: float) -> void:
 	if ship.attractor: apo -= ship.attractor.radius
 	var str2: String = "Apoapsis = " + magnitude_to_string(apo, "m")
 	
-	text = str0 + "\n" +str1 + "\n" + str2
+	text = str0 + "\n" + str01 + "\n" + str1 + "\n" + str2
 	
-	update = true
+	#update = true
 
 func magnitude_to_string(value:float, unit:String) -> String:
 	if value > 10_000_000:

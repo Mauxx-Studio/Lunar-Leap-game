@@ -1,9 +1,13 @@
 extends Node
 
-@export var torque:float = 500
+@export var torque:float = 1000
 @export var angular_velocity_limit:float = 0.1
 
+var direction_func:Callable
+var _auto: bool = false
+
 @onready var capsule: RigidBody3D = $".."
+@onready var ship: OrbitalObject3D = $"../../../../EarthSystem/Earth/Ship"
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("attitude_down"):
@@ -33,7 +37,14 @@ func rotate_ship_to(direction:Vector3) -> void:
 	if capsule.angular_velocity.length() < angular_velocity_limit:
 		capsule.apply_torque(rot * torque)
 		print("aplicado torque")
-	
+
+func start_rotation(direcion_sp: Callable):
+	direction_func = direcion_sp
+	_auto = true
+
+func kill_rotation():
+	_auto = false
+
 	#var local_dir_xy = local_dir
 	#local_dir_xy.z = 0
 	#var rot_z = local_dir_xy.signed_angle_to(Vector3.UP, Vector3.BACK)

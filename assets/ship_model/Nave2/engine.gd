@@ -12,7 +12,7 @@ var applied_thrust:Vector3 = Vector3.ZERO
 func _physics_process(_delta: float) -> void:
 	if engine_on and _thrust > 0.0:
 		var force:Vector3 = global_basis * Vector3(0,_thrust * engine_thrust,0)
-		apply_force(force)
+		#apply_force(force)
 		applied_thrust = force
 	else:
 		applied_thrust = Vector3.ZERO

@@ -3,12 +3,12 @@ extends Area3D
 @export var engine_thrust:float
 
 @onready var ship: OrbitalObject3D = $"../../../../EarthSystem/Earth/Ship"
-@onready var ship_system: Node3D = $"../../../../EarthSystem/Earth/Ship/ShipSystem"
+@onready var capsule: RigidBody3D = $"../../../ShipView/Capsule"
 @onready var icon: Node3D = $Icon
 @onready var camera_map_view: Camera3D = %CameraMapView
 
 func _process(_delta: float) -> void:
-	basis = ship_system.basis
+	basis = capsule.basis
 	# Update the icon orientation and size
 	icon.update(ship.get_velocity(), position, camera_map_view.global_position)
 

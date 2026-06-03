@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bty1vryxofffo"]
 
 [ext_resource type="Script" uid="uid://dwldmldpnga2m" path="res://addons/orbital_tools/orbital_object_3d.gd" id="1_kvpfn"]
-[ext_resource type="Script" uid="uid://cbdc0xp5dgb2m" path="res://scripts/ship_system.gd" id="2_ssvqc"]
 [ext_resource type="Script" uid="uid://b68p7kxiwo822" path="res://scripts/visible_world.gd" id="3_1kice"]
 [ext_resource type="PackedScene" uid="uid://cp7pih1ent0io" path="res://scenes/env_and_camera/spatial_env.tscn" id="3_kvuet"]
 [ext_resource type="Script" uid="uid://cfwxhm2xnfh4v" path="res://scripts/map_view.gd" id="4_rysoc"]
@@ -41,6 +40,13 @@ albedo_texture = ExtResource("9_264po")
 radius = 1.7
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_vef74"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bt5mj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1j6l"]
+albedo_color = Color(0.4443136, 0.62112236, 1, 1)
+emission_enabled = true
+emission = Color(0.13662028, 0.37203416, 1, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_trtic"]
 
@@ -113,11 +119,6 @@ _initial_velocity = Vector3(0, 0, -7656.24)
 _show_log_msgs = false
 metadata/_custom_type_script = "uid://dwldmldpnga2m"
 
-[node name="ShipSystem" type="Node3D" parent="EarthSystem/Earth/Ship" unique_id=842341445]
-script = ExtResource("2_ssvqc")
-engine_thrust = 100000.0
-thrust_change_rate = 2.0
-
 [node name="VisibleWorld" type="Node" parent="." unique_id=1696306527]
 script = ExtResource("3_1kice")
 
@@ -184,37 +185,50 @@ fov = 40.0
 script = ExtResource("13_264po")
 zoom_speed = 0.08
 
-[node name="Capsule" parent="VisibleWorld" unique_id=1553533486 instance=ExtResource("18_pl11u")]
+[node name="ShipView" type="Node3D" parent="VisibleWorld" unique_id=548966789]
 visible = false
-
-[node name="ShipView" type="Node3D" parent="VisibleWorld/Capsule" unique_id=548966789]
 script = ExtResource("15_e1j6l")
 
-[node name="EarthSV" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=724636409]
+[node name="EarthSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=724636409]
 script = ExtResource("19_pl11u")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/Capsule/ShipView/EarthSV" unique_id=342504504]
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/ShipView/EarthSV" unique_id=342504504]
 radial_segments = 64
 rings = 32
 material = SubResource("StandardMaterial3D_iotsf")
 
-[node name="MoonSV" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=424354658]
+[node name="MoonSV" type="Node3D" parent="VisibleWorld/ShipView" unique_id=424354658]
 script = ExtResource("20_pl11u")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/Capsule/ShipView/MoonSV" unique_id=1882266244]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.25, 0, 310.47012)
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VisibleWorld/ShipView/MoonSV" unique_id=1882266244]
 radial_segments = 64
 rings = 32
 material = SubResource("StandardMaterial3D_lc2xo")
 
-[node name="CameraPivot" type="Node3D" parent="VisibleWorld/Capsule/ShipView" unique_id=1239897607]
+[node name="CameraPivot" type="Node3D" parent="VisibleWorld/ShipView" unique_id=1239897607]
 
-[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/Capsule/ShipView/CameraPivot" unique_id=369832673]
+[node name="CameraShipView" type="Camera3D" parent="VisibleWorld/ShipView/CameraPivot" unique_id=369832673]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
 fov = 40.0
 script = ExtResource("14_264po")
 zoom_speed = 0.08
+
+[node name="Capsule" parent="VisibleWorld/ShipView" unique_id=1553533486 instance=ExtResource("18_pl11u")]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="VisibleWorld/ShipView" unique_id=1521264326]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 5, 0, 0)
+visible = false
+radius = 0.1
+height = 10.0
+material = SubResource("StandardMaterial3D_bt5mj")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="VisibleWorld/ShipView" unique_id=1155780912]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 5)
+visible = false
+radius = 0.1
+height = 10.0
+material = SubResource("StandardMaterial3D_e1j6l")
 
 [node name="Hud" type="CanvasLayer" parent="VisibleWorld" unique_id=1657498710]
 
@@ -354,9 +368,8 @@ text = "▲"
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV" to="VisibleWorld/MapView" method="_on_earth_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV/MoonV" to="VisibleWorld/MapView" method="_on_moon_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV/ShipV" to="VisibleWorld/MapView" method="_on_ship_v_input_event"]
-[connection signal="attitude_contorller" from="VisibleWorld/Hud/AttitudeContainer" to="EarthSystem/Earth/Ship/ShipSystem" method="_on_attitude_container_attitude_contorller"]
-[connection signal="attitude_contorller" from="VisibleWorld/Hud/AttitudeContainer" to="VisibleWorld/Capsule" method="_on_attitude_container_attitude_contorller"]
-[connection signal="direction_controller" from="VisibleWorld/Hud/AttitudeContainer" to="VisibleWorld/Capsule" method="_on_attitude_container_direction_controller"]
+[connection signal="kill_autorotate" from="VisibleWorld/ShipView/Capsule" to="VisibleWorld/Hud/AttitudeContainer" method="_on_capsule_kill_autorotate"]
+[connection signal="direction_controller" from="VisibleWorld/Hud/AttitudeContainer" to="VisibleWorld/ShipView/Capsule" method="_on_attitude_container_direction_controller"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Prograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_prograde_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Retrograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_retrograde_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Normal" to="VisibleWorld/Hud/AttitudeContainer" method="_on_normal_toggled"]

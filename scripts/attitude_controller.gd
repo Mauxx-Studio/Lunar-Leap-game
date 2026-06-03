@@ -99,3 +99,10 @@ func _on_radial_in_toggled(toggled_on: bool) -> void:
 func _on_radial_out_toggled(toggled_on: bool) -> void:
 	attitude_contorller.emit(toggled_on, rotate_radial_out)
 	direction_controller.emit(toggled_on, direcion_radial_out)
+
+
+func _on_capsule_kill_autorotate() -> void:
+	var children = get_children()
+	for c in children:
+		if c is Button:
+			c.button_pressed = false

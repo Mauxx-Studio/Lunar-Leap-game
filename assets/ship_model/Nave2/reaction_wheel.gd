@@ -45,18 +45,17 @@ func start_rotation(direcion_sp: Callable):
 func kill_rotation():
 	_auto = false
 
-	#var local_dir_xy = local_dir
-	#local_dir_xy.z = 0
-	#var rot_z = local_dir_xy.signed_angle_to(Vector3.UP, Vector3.BACK)
-	#var local_dir_yz = local_dir
-	#local_dir_yz.x = 0
-	#var rot_x = local_dir_yz.signed_angle_to(Vector3.UP, Vector3.RIGHT)
-	#if absf(local_dir_xy.x) > 0.05:
-		#var new_torque = Vector3(0, 0, -torque*rot_z)
-		#print("rot_z: ",new_torque, "  dir: ", local_dir_xy)
-		#capsule.apply_torque(capsule.basis * new_torque)
-	#if absf(local_dir_yz.z) > 0.05:
-		#var new_torque = Vector3(torque*rot_x, 0, 0)
-		#print("rot_x: ",new_torque)
-		#capsule.apply_torque(capsule.basis * new_torque)
-	#capsule.apply_torque(capsule.basis * new_torque)
+func stabilize_by_axis(omg:float, axis:Vector3):
+	var cap_basis:Basis = capsule.basis
+	capsule.apply_torque(cap_basis * axis * (-sign(omg)) * torque)
+
+func rotate_by_axis(rot:float, omg:float, axis:Vector3) -> void:
+	var cap_basis:Basis = capsule.basis
+	if sign(rot * omg) > 0:
+		if absf(omg) > angular_velocity_limit and absf(rot) > absf(5*omg): return
+	var torque_axis:float
+	if absf(rot) > 0.5:
+		torque_axis = sign(rot) * torque
+	else:
+		torque_axis = minf(1,(rot - 5 * omg)) * torque
+	capsule.apply_torque(cap_basis * axis * torque_axis)

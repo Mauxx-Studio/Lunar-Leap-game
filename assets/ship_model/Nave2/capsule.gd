@@ -12,7 +12,6 @@ var thrust:float
 var _autorotate: bool
 var _autodirection: Callable
 var _rotation:float = 0.0
-var _factor_torque:float
 
 @onready var ship: OrbitalObject3D = $"../../../EarthSystem/Earth/Ship"
 @onready var ship_view: Node3D = $".."
@@ -23,9 +22,6 @@ func _ready() -> void:
 	find_engines()
 	update_ship_mass()
 	ship.mass = get_ship_mass()
-	axis_lock_linear_x = true
-	axis_lock_linear_y = true
-	axis_lock_linear_z = true
 
 func _physics_process(_delta: float) -> void:
 	if not inertial:
@@ -95,26 +91,14 @@ func get_autorotate() -> bool:
 	return _autorotate
 
 func rotate_ship_to(direction:Vector3) -> void:
-	var local_dir = basis.inverse() * direction
-	var angl = Vector3.UP.angle_to(local_dir)
-	if angl > 3.12:
-		apply_torque(basis * Vector3.RIGHT * reaction_wheel.torque)
-		print("aplicado torque aux")
-		return
-	var rot = basis * Vector3.UP.cross(local_dir)
-	if _rotation == 0.0:
-		_rotation = angl
-		if angl > 0.1: _factor_torque = 1.0
-		else: _factor_torque = 0.4
-	if angl > 3.0/4.0 *_rotation:
-		apply_torque(rot.normalized() * reaction_wheel.torque * _factor_torque)
-		return
-	if angl < 1.0/4.0 *_rotation:
-		apply_torque(-angular_velocity.normalized() * reaction_wheel.torque * _factor_torque)
-	if angl < 0.005 or angular_velocity.length() < 0.01: _rotation = 0.0
+	var local_dir:Vector3 = basis.inverse() * direction
+	var omg:Vector3 = basis.inverse() * angular_velocity
+	var rot:Vector3 = Vector3.UP.cross(local_dir)
+	reaction_wheel.stabilize_by_axis(omg.y, Vector3.UP)
+	reaction_wheel.rotate_by_axis(rot.x,omg.x,Vector3.RIGHT)
+	reaction_wheel.rotate_by_axis(rot.z,omg.z,Vector3.BACK)
 
 func _on_attitude_container_direction_controller(auto: bool, auto_direction: Callable) -> void:
-	set_autorotate(auto)
-	print(auto)
+	_autorotate = auto
 	_autodirection = auto_direction
 	_rotation = 0.0

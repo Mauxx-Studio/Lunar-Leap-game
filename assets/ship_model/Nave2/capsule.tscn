@@ -262,3 +262,5 @@ node_b = NodePath("../ServiceModule")
 
 [node name="ReactionWheel" type="Node" parent="." unique_id=740889600]
 script = ExtResource("3_dpu0s")
+torque = 3000.0
+angular_velocity_limit = 0.12

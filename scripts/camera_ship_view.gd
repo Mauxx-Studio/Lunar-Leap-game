@@ -26,3 +26,6 @@ func _input(event: InputEvent) -> void:
 		position.z *= (1 - zoom_speed)
 	if event.is_action_pressed("zoom_out",true):
 		position.z *= (1 + zoom_speed)
+
+func set_cam_position(p: Vector3) -> void:
+	camera_pivot.position = p

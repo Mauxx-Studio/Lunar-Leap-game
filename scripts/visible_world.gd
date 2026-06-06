@@ -7,10 +7,10 @@ extends Node
 
 
 func _ready() -> void:
-	map_view.show()
-	ship_view.hide()
-	camera_map_view.make_current()
-	GameManager.current_cam = camera_map_view
+	map_view.hide()
+	ship_view.show()
+	camera_ship_view.make_current()
+	GameManager.current_cam = camera_ship_view
 
 func _on_change_view_button_down() -> void:
 	if GameManager.current_cam == camera_ship_view:

@@ -13,6 +13,7 @@ var relations:Dictionary
 
 @onready var earth_sv: Node3D = $EarthSV
 @onready var moon_sv: Node3D = $MoonSV
+@onready var capsule: RigidBody3D = $Capsule
 
 func _ready() -> void:
 	var att:OrbitalObject3D = ship.attractor
@@ -31,6 +32,8 @@ func _process(_delta: float) -> void:
 	for i in visibles.size():
 		remote = minf(remote,3990)
 		remote = shrink_visible(visibles[i], relations[visibles[i]], remote)
+	
+	camera_ship_view.set_cam_position(capsule.position)
 
 func shrink_visible(object:OrbitalObject3D, visible_node:Node3D, remote:float) -> float:
 	if not visible_node.has_method("set_radius"): return 0.0

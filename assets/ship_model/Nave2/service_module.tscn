@@ -232,7 +232,10 @@ radius = 1.8
 
 [node name="ServiceModule" type="RigidBody3D" unique_id=1845667713]
 mass = 6000.0
+gravity_scale = 0.0
 script = ExtResource("1_oglr3")
+fuel_capacity = 10.0
+oxidizer_capacity = 36.0
 metadata/_custom_type_script = "uid://7w2x2f26yyng"
 
 [node name="tank" type="MeshInstance3D" parent="." unique_id=499068180]

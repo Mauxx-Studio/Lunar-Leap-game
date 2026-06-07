@@ -17,11 +17,11 @@
 [ext_resource type="Script" uid="uid://drmsp3wbawkmi" path="res://scripts/camera_ship_view.gd" id="14_264po"]
 [ext_resource type="Script" uid="uid://c6bhmfes7u88o" path="res://scripts/time_info.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://deoc1ljbhqoab" path="res://scripts/ship_view.gd" id="15_e1j6l"]
-[ext_resource type="Script" uid="uid://c446l7v81mnlx" path="res://scripts/thrust_info.gd" id="15_ir15t"]
 [ext_resource type="ButtonGroup" uid="uid://dgk3pacbc1r0l" path="res://attitude_control_button_group.tres" id="16_ca42v"]
 [ext_resource type="Script" uid="uid://bvbhnt4kn28rc" path="res://scripts/attitude_controller.gd" id="16_rysoc"]
 [ext_resource type="PackedScene" uid="uid://ccf30d523h65v" path="res://assets/ship_model/Nave2/capsule.tscn" id="18_pl11u"]
 [ext_resource type="Script" uid="uid://cm43vxxsl3co1" path="res://scripts/earth_sv.gd" id="19_pl11u"]
+[ext_resource type="Script" uid="uid://dssw01hc836og" path="res://scripts/thrust_container.gd" id="20_e1j6l"]
 [ext_resource type="Script" uid="uid://bt1v0a1khtlsj" path="res://scripts/moon_sv.gd" id="20_pl11u"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iotsf"]
@@ -47,15 +47,6 @@ radius = 1.7
 albedo_color = Color(0.4443136, 0.62112236, 1, 1)
 emission_enabled = true
 emission = Color(0.13662028, 0.37203416, 1, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_trtic"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ir15t"]
-font = SubResource("SystemFont_trtic")
-font_size = 18
-font_color = Color(1, 1, 0.7058824, 1)
-outline_size = 1
-outline_color = Color(0, 0, 0.2509804, 1)
 
 [sub_resource type="Theme" id="Theme_ca42v"]
 
@@ -232,17 +223,28 @@ material = SubResource("StandardMaterial3D_e1j6l")
 
 [node name="Hud" type="CanvasLayer" parent="VisibleWorld" unique_id=1657498710]
 
-[node name="OrbitalInfo" type="Label" parent="VisibleWorld/Hud" unique_id=256680341]
+[node name="OrbitalInfo" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=303402747]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 5.0
 offset_top = -25.0
 offset_right = 45.0
-offset_bottom = -2.0
+offset_bottom = 1.0
 grow_vertical = 0
-label_settings = SubResource("LabelSettings_ir15t")
 script = ExtResource("13_kvuet")
+
+[node name="SpeedLabel" type="Label" parent="VisibleWorld/Hud/OrbitalInfo" unique_id=649845216]
+layout_mode = 2
+
+[node name="AltittudeLabel" type="Label" parent="VisibleWorld/Hud/OrbitalInfo" unique_id=1544943765]
+layout_mode = 2
+
+[node name="PeriapsisLabel" type="Label" parent="VisibleWorld/Hud/OrbitalInfo" unique_id=837075222]
+layout_mode = 2
+
+[node name="ApoapsisLabel" type="Label" parent="VisibleWorld/Hud/OrbitalInfo" unique_id=852893350]
+layout_mode = 2
 
 [node name="ThrustContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=33388708]
 anchors_preset = 3
@@ -251,23 +253,30 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -157.0
-offset_top = -45.0
-offset_bottom = 16.0
+offset_top = -61.0
 grow_horizontal = 0
 grow_vertical = 0
+script = ExtResource("20_e1j6l")
+
+[node name="EngineOn" type="Label" parent="VisibleWorld/Hud/ThrustContainer" unique_id=1077341787]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="ThrustInfo" type="Label" parent="VisibleWorld/Hud/ThrustContainer" unique_id=4016250]
 layout_mode = 2
 theme = SubResource("Theme_ca42v")
 label_settings = SubResource("LabelSettings_rysoc")
 horizontal_alignment = 1
-script = ExtResource("15_ir15t")
 
-[node name="ProgressBar" type="ProgressBar" parent="VisibleWorld/Hud/ThrustContainer" unique_id=869070228]
+[node name="ThrustProgressBar" type="ProgressBar" parent="VisibleWorld/Hud/ThrustContainer" unique_id=869070228]
 layout_mode = 2
 theme = SubResource("Theme_ir15t")
 max_value = 1.0
 show_percentage = false
+
+[node name="Control" type="Control" parent="VisibleWorld/Hud/ThrustContainer" unique_id=1103246323]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
 
 [node name="AttitudeContainer" type="VBoxContainer" parent="VisibleWorld/Hud" unique_id=202625042]
 anchors_preset = 6
@@ -282,6 +291,12 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 1
 script = ExtResource("16_rysoc")
+
+[node name="Stabilize" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=1052583394]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("16_ca42v")
+text = "Stabilize"
 
 [node name="Prograde" type="Button" parent="VisibleWorld/Hud/AttitudeContainer" unique_id=736144250]
 layout_mode = 2
@@ -354,6 +369,7 @@ layout_mode = 2
 text = "▼"
 
 [node name="TimeScale" type="Label" parent="VisibleWorld/Hud/TimeVBoxContainer/HBoxContainer" unique_id=430991602]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 label_settings = SubResource("LabelSettings_qnb83")
 horizontal_alignment = 1
@@ -370,6 +386,7 @@ text = "▲"
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV/ShipV" to="VisibleWorld/MapView" method="_on_ship_v_input_event"]
 [connection signal="kill_autorotate" from="VisibleWorld/ShipView/Capsule" to="VisibleWorld/Hud/AttitudeContainer" method="_on_capsule_kill_autorotate"]
 [connection signal="direction_controller" from="VisibleWorld/Hud/AttitudeContainer" to="VisibleWorld/ShipView/Capsule" method="_on_attitude_container_direction_controller"]
+[connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Stabilize" to="VisibleWorld/ShipView/Capsule" method="_on_stabilize_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Prograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_prograde_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Retrograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_retrograde_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Normal" to="VisibleWorld/Hud/AttitudeContainer" method="_on_normal_toggled"]

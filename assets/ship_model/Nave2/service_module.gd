@@ -9,5 +9,9 @@ const FUEL_OX_relation:float = 3.6
 		fuel_capacity = v
 @export var oxidizer_capacity:float
 
-var fuel_mass
-var oxidizer_mass
+var fuel_mass:float
+var oxidizer_mass:float
+
+func _ready() -> void:
+	fuel_mass = fuel_capacity
+	oxidizer_mass = oxidizer_capacity

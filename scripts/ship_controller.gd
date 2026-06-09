@@ -1,4 +1,4 @@
-class_name SpaceShip
+class_name ShipController
 
 extends ShipComponent
 
@@ -23,7 +23,7 @@ func find_components(node:Node, current:ShipComponent):
 		if child is ShipComponent:
 			components.append(child)
 			current.children_components.append(child)
-			child.spaceship = self
+			child.controller = self
 			child.parent_component = current
 			find_components(child,child)
 		else:
@@ -45,3 +45,13 @@ func get_total_thrust() -> Vector3:
 	for e in engines:
 		thrust += e.applied_thrust
 	return thrust
+
+func set_engines_thrust(t:float) -> void:
+	if engines.size() == 0: return
+	for i in engines.size():
+		engines[i].set_thrust(t)
+
+func set_engines_on(on:bool) -> void:
+	if engines.size() == 0: return
+	for i in engines.size():
+		engines[i].set_engine_on(on)

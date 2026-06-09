@@ -1,4 +1,4 @@
-extends SpaceShip
+extends ShipController
 
 signal kill_autorotate()
 
@@ -56,16 +56,6 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("low_thrust"):
 		low_thrust(_delta)
 		set_engines_thrust(thrust)
-
-func set_engines_thrust(t:float) -> void:
-	if engines.size() == 0: return
-	for i in engines.size():
-		engines[i].set_thrust(t)
-
-func set_engines_on(on:bool) -> void:
-	if engines.size() == 0: return
-	for i in engines.size():
-		engines[i].set_engine_on(on)
 
 func _input(event: InputEvent) -> void:
 	# Engine turn on or off with the same key

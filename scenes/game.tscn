@@ -206,6 +206,7 @@ script = ExtResource("14_264po")
 zoom_speed = 0.08
 
 [node name="Capsule" parent="VisibleWorld/ShipView" unique_id=1553533486 instance=ExtResource("18_pl11u")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="VisibleWorld/ShipView" unique_id=1521264326]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 5, 0, 0)
@@ -384,7 +385,6 @@ text = "▲"
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV" to="VisibleWorld/MapView" method="_on_earth_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV/MoonV" to="VisibleWorld/MapView" method="_on_moon_v_input_event"]
 [connection signal="input_event" from="VisibleWorld/MapView/EarthV/ShipV" to="VisibleWorld/MapView" method="_on_ship_v_input_event"]
-[connection signal="kill_autorotate" from="VisibleWorld/ShipView/Capsule" to="VisibleWorld/Hud/AttitudeContainer" method="_on_capsule_kill_autorotate"]
 [connection signal="direction_controller" from="VisibleWorld/Hud/AttitudeContainer" to="VisibleWorld/ShipView/Capsule" method="_on_attitude_container_direction_controller"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Stabilize" to="VisibleWorld/ShipView/Capsule" method="_on_stabilize_toggled"]
 [connection signal="toggled" from="VisibleWorld/Hud/AttitudeContainer/Prograde" to="VisibleWorld/Hud/AttitudeContainer" method="_on_prograde_toggled"]

@@ -32,6 +32,10 @@ func find_components(node:Node, current:ShipComponent):
 func get_components() -> Array[ShipComponent]:
 	return components
 
+func update_all_components():
+	for c in components:
+		c.update_component()
+
 func find_engines() -> void:
 	for component in components:
 		if component is ShipEngine:

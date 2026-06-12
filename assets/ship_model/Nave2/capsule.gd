@@ -21,6 +21,7 @@ var _stabilize:bool
 func _ready() -> void:
 	find_components(self,self)
 	find_engines()
+	update_all_components()
 	update_ship_mass()
 	ship.mass = get_ship_mass()
 

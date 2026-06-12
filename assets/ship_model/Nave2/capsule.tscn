@@ -225,7 +225,6 @@ radius = 1.8
 [node name="Capsule" type="RigidBody3D" unique_id=335996665]
 mass = 10000.0
 script = ExtResource("1_dxas5")
-is_base_component = true
 metadata/_custom_type_script = "uid://c3mt5yt5fnmia"
 
 [node name="capsule" type="MeshInstance3D" parent="." unique_id=749717873]

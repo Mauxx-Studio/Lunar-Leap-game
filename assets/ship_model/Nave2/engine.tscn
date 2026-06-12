@@ -43,6 +43,58 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7oov4")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vbvu8"]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 0.3
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, -1, 0)
+spread = 8.0
+initial_velocity_min = 2.0
+initial_velocity_max = 3.5
+angular_velocity_min = -216.77
+angular_velocity_max = -1.6093254e-05
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ycd2"]
+albedo_color = Color(1, 1, 1, 0.8980392)
+emission_enabled = true
+emission = Color(0.8772199, 0.8568947, 1.1551381e-06, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_32nhj"]
+material = SubResource("StandardMaterial3D_7ycd2")
+radius = 0.04
+height = 0.06
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ydsex"]
+lifetime_randomness = 1.0
+particle_flag_rotate_y = true
+emission_shape = 1
+emission_sphere_radius = 0.35
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, -1, 0)
+spread = 8.0
+initial_velocity_min = 2.0
+initial_velocity_max = 3.5
+angular_velocity_min = -216.77
+angular_velocity_max = -1.6093254e-05
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydsex"]
+albedo_color = Color(0.78039217, 0.78039217, 0.8745098, 1)
+emission_enabled = true
+emission = Color(0.40069768, 0.40069777, 0.40069747, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vbvu8"]
+material = SubResource("StandardMaterial3D_ydsex")
+size = Vector3(0.05, 0.03, 0.08)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4tuxo"]
 height = 0.8
 radius = 0.35
@@ -58,6 +110,27 @@ mesh = SubResource("ArrayMesh_siujo")
 
 [node name="engine_nozzle_center" type="Node3D" parent="Engine" unique_id=195823530]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6375785, 0)
+
+[node name="FireParticles" type="GPUParticles3D" parent="Engine/engine_nozzle_center" unique_id=514678768]
+emitting = false
+amount = 500
+lifetime = 0.3
+process_material = SubResource("ParticleProcessMaterial_vbvu8")
+draw_pass_1 = SubResource("SphereMesh_32nhj")
+
+[node name="SteamParticles" type="GPUParticles3D" parent="Engine/engine_nozzle_center" unique_id=1960444202]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11900002, 0)
+emitting = false
+amount = 500
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_ydsex")
+draw_pass_1 = SubResource("BoxMesh_vbvu8")
+
+[node name="FireGlow" type="OmniLight3D" parent="Engine/engine_nozzle_center" unique_id=571777636]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.2, 0)
+visible = false
+light_color = Color(0.84313726, 0.81960785, 1, 1)
+light_energy = 1.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=653328544]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
